@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<title>Configuration Details | suckless_dotfiles</title>
+	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+		rel="stylesheet" />
+	<script src="tailwind.config.js" defer></script>
+	<style>
+		.material-symbols-outlined {
+			font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+		}
+
+		body {
+			font-family: 'Fira Code', sans-serif;
+		}
+
+		.mono-text {
+			font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+		}
+	</style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+	<div class="flex flex-col min-h-screen w-full overflow-x-hidden">
+		<!-- Navigation Bar -->
+		<header
+			class="border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+			<div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+				<div class="flex items-center gap-6">
+					<div class="flex items-center gap-2 text-primary">
+						<span class="material-symbols-outlined text-2xl" data-icon="terminal">terminal</span>
+						<span class="font-bold tracking-tight text-lg">suckless_dotfiles</span>
+					</div>
+					<nav class="hidden md:flex items-center gap-4 text-sm font-medium">
+						<a class="hover:text-primary transition-colors" href="#">[Index]</a>
+						<a class="hover:text-primary transition-colors" href="#">[Tools]</a>
+						<a class="hover:text-primary transition-colors" href="#">[Wiki]</a>
+						<a class="hover:text-primary transition-colors" href="#">[Submit]</a>
+					</nav>
+				</div>
+				<div class="flex items-center gap-4">
+					<div class="relative group">
+						<span class="absolute inset-y-0 left-3 flex items-center text-slate-400">
+							<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+						</span>
+						<input
+							class="bg-slate-100 dark:bg-slate-900 border-none focus:ring-1 focus:ring-primary rounded py-1.5 pl-9 pr-4 text-sm w-48 transition-all focus:w-64"
+							placeholder="Search configs..." type="text" />
+					</div>
+					<button
+						class="bg-primary text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+						Login
+					</button>
+				</div>
+			</div>
+		</header>
+		<main class="flex-grow max-w-4xl mx-auto w-full px-6 py-12">
+			<!-- Page Heading Section -->
+			<section class="mb-12">
+				<div class="flex flex-col gap-2">
+					<h1 class="text-4xl font-black tracking-tighter text-slate-900 dark:text-white">
+						dwm-6.2-minimal-status
+					</h1>
+					<div
+						class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500 dark:text-slate-400 mono-text">
+						<span>Maintainer: <span class="text-primary">suckless_fan</span></span>
+						<span>|</span>
+						<span>Updated: 2023-10-12</span>
+						<span>|</span>
+						<span>License: MIT</span>
+					</div>
+				</div>
+				<div class="mt-8 flex gap-3">
+					<button
+						class="border border-slate-300 dark:border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+						Clone Repo
+					</button>
+					<button
+						class="border border-slate-300 dark:border-slate-700 px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+						View Config.h
+					</button>
+				</div>
+			</section>
+			<!-- README Section -->
+			<section class="mb-16">
+				<div class="flex items-center gap-2 mb-4">
+					<span class="text-primary text-xl font-bold">#</span>
+					<h2 class="text-xl font-bold tracking-tight uppercase">README.md</h2>
+				</div>
+				<div class="bg-slate-50 dark:bg-[#161b2a] border border-slate-200 dark:border-slate-800 p-6">
+					<div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
+						<p>
+							A minimalist dwm configuration focusing on core functionality. This build adheres strictly
+							to the suckless philosophy of "software that doesn't suck." It aims to be as small and
+							efficient as possible while providing necessary modern conveniences.
+						</p>
+						<p>
+							Included patches for version 6.2:
+						</p>
+						<ul class="list-none space-y-1 mono-text text-sm ml-4">
+							<li class="flex items-start gap-2">
+								<span class="text-primary">-</span> vanitygaps: For aesthetic window spacing.
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-primary">-</span> statuscolors: Support for colored text in the status
+								bar.
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-primary">-</span> dwmbar: A clean, modular status bar script.
+							</li>
+						</ul>
+						<div class="mt-8">
+							<p class="font-bold mb-2 uppercase text-xs tracking-widest text-slate-400">Installation</p>
+							<div
+								class="bg-black/10 dark:bg-black/40 p-4 rounded mono-text text-sm overflow-x-auto whitespace-pre">
+								<span class="text-primary">$</span> git clone https://git.suckless.org/dwm
+								<span class="text-primary">$</span> cd dwm
+								<span class="text-primary">$</span> cp config.def.h config.h
+								<span class="text-primary">$</span> make &amp;&amp; sudo make install
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Suckless Reviews Section -->
+			<section class="mb-20">
+				<div class="flex items-center justify-between mb-6">
+					<div class="flex items-center gap-2">
+						<span class="text-primary text-xl font-bold">#</span>
+						<h2 class="text-xl font-bold tracking-tight uppercase">Suckless Reviews</h2>
+					</div>
+					<span class="text-xs font-medium text-slate-500 uppercase tracking-widest">3 Submissions</span>
+				</div>
+				<div class="space-y-0 border-t border-slate-200 dark:border-slate-800">
+					<!-- Review Item 1 -->
+					<div class="group py-4 border-b border-slate-200 dark:border-slate-800 flex items-start gap-6">
+						<div class="mono-text text-primary font-bold min-w-[60px]">
+							[5/5]
+						</div>
+						<div class="flex-grow">
+							<p class="text-slate-800 dark:text-slate-200 leading-tight">Cleanest config I have seen. No
+								bloat. Perfect for T60 users.</p>
+							<div class="mt-2 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+								User: <span
+									class="hover:text-primary cursor-pointer transition-colors">x220_enthusiast</span> |
+								2 days ago
+							</div>
+						</div>
+					</div>
+					<!-- Review Item 2 -->
+					<div class="group py-4 border-b border-slate-200 dark:border-slate-800 flex items-start gap-6">
+						<div class="mono-text text-primary font-bold min-w-[60px]">
+							[4/5]
+						</div>
+						<div class="flex-grow">
+							<p class="text-slate-800 dark:text-slate-200 leading-tight">Great documentation, but missing
+								the alpha patch for transparency.</p>
+							<div class="mt-2 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+								User: <span class="hover:text-primary cursor-pointer transition-colors">void_user</span>
+								| 1 week ago
+							</div>
+						</div>
+					</div>
+					<!-- Review Item 3 -->
+					<div class="group py-4 border-b border-slate-200 dark:border-slate-800 flex items-start gap-6">
+						<div class="mono-text text-primary font-bold min-w-[60px]">
+							[5/5]
+						</div>
+						<div class="flex-grow">
+							<p class="text-slate-800 dark:text-slate-200 leading-tight">Works perfectly on OpenBSD 7.3
+								without any modification. Solid work.</p>
+							<div class="mt-2 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+								User: <span class="hover:text-primary cursor-pointer transition-colors">puffy_fan</span>
+								| 3 weeks ago
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mt-8">
+					<button
+						class="w-full border-2 border-dashed border-slate-300 dark:border-slate-700 py-4 text-slate-500 hover:text-primary hover:border-primary transition-all text-sm font-bold uppercase tracking-widest">
+						+ Submit Review
+					</button>
+				</div>
+			</section>
+		</main>
+		<!-- Footer -->
+		<footer class="border-t border-slate-200 dark:border-slate-800 py-12 bg-slate-50 dark:bg-slate-900/50">
+			<div class="max-w-4xl mx-auto px-6 text-center">
+				<div class="mono-text text-[10px] text-slate-400 space-y-2 uppercase tracking-tighter">
+					<p>Generated by suckless_dotfiles_engine v1.0.4</p>
+					<p>© 2023 - Keep it simple, stupid.</p>
+				</div>
+				<div class="mt-6 flex justify-center gap-6">
+					<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+						<span class="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
+					</a>
+					<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+						<span class="material-symbols-outlined text-lg" data-icon="code">code</span>
+					</a>
+					<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+						<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+					</a>
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
+
+</html>

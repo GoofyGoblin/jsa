@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Register - Suckless Ratings</title>
+	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+	<script src="tailwind.config.js" defer></script>
+	<style>
+		body {
+			font-family: 'Fira Code', sans-serif;
+			text-rendering: optimizeLegibility;
+		}
+
+		.suckless-link {
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 2px;
+		}
+
+		.browser-default-btn {
+			appearance: none;
+			background-color: #1c1f27;
+			border: 1px solid #3b4354;
+			padding: 4px 12px;
+			cursor: pointer;
+		}
+
+		.browser-default-btn:hover {
+			border-color: #1152d4;
+		}
+
+		.browser-default-btn:active {
+			background-color: #1152d4;
+			color: white;
+		}
+	</style>
+	<script src="./js/register.mjs" type="moduel" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+	<div class="max-w-[960px] mx-auto px-6 py-8">
+		<!-- TopNavBar -->
+		<header class="border-b border-slate-300 dark:border-slate-800 pb-4 mb-12">
+			<div class="flex flex-col gap-4">
+				<div class="flex items-center gap-2">
+					<span aria-hidden="true" class="material-symbols-outlined text-primary">terminal</span>
+					<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white uppercase">
+						Suckless Ratings
+					</h1>
+				</div>
+				<nav class="flex flex-wrap items-center gap-2 text-sm font-medium">
+					<a class="text-primary suckless-link" href="home.html">Home</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="submit.html">Submit</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="leaderboard.html">Leaderboard</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="about.html">About</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="flex flex-col items-center justify-center">
+			<div class="w-full max-w-md">
+				<div class="mb-8 text-center">
+					<h2 class="text-3xl font-bold tracking-tight mb-2">Register</h2>
+					<p class="text-gray-500 dark:text-gray-400 text-sm">Create a new account to share your configurations.</p>
+				</div>
+
+				<form class="space-y-6">
+					<div class="flex flex-col gap-2">
+						<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+							Username
+						</label>
+						<input
+							class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+							type="text" id="username" required />
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+							Email
+						</label>
+						<input
+							class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+							type="email" id="email" required />
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+							Password
+						</label>
+						<input
+							class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+							type="password" id="password" required />
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+							Confirm Password
+						</label>
+						<input
+							class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+							type="password" id="confirm-password" required />
+					</div>
+
+					<div class="pt-4">
+						<button class="browser-default-btn w-full text-sm font-medium h-12 border dark:border-gray-600 text-gray-900 dark:text-white transition-colors" type="submit" id="register-btn">
+							Register
+						</button>
+					</div>
+				</form>
+
+				<div class="mt-8 text-center text-sm">
+					<p class="text-gray-500 dark:text-gray-400">
+						Already have an account? <a href="login.html" class="text-primary suckless-link">Login here</a>
+					</p>
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="mt-20 pt-8 border-t border-slate-300 dark:border-slate-800">
+			<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+				<div class="flex gap-4">
+					<a class="suckless-link hover:text-primary" href="#">Source</a>
+					<a class="suckless-link hover:text-primary" href="#">Contact</a>
+				</div>
+				<div class="text-center md:text-right">
+					<p>© 2024 Suckless Ratings. Built with simplicity.</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Submit Your Dotfiles - Suckless Philosophy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"/>
+<link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet"/>
+<link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet"/>
+<script src="tailwind.config.js" defer></script>
+<style>
+    .suckless-link {
+        color: #1152d4;
+        text-decoration: none;
+    }
+
+    .suckless-link:hover {
+        text-decoration: underline;
+    }
+
+    .browser-default-btn {
+        appearance: none;
+        background-color: #1c1f27;
+        border: 1px solid #3b4354;
+        padding: 4px 12px;
+        cursor: pointer;
+    }
+
+    .browser-default-btn:hover {
+        border-color: #1152d4;
+    }
+
+    .browser-default-btn:active {
+        background-color: #1152d4;
+        color: white;
+    }
+</style>
+<script src="./js/submit.mjs" type="module" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 min-h-screen">
+<div class="max-w-[800px] mx-auto px-6 py-8">
+<!-- TopNavBar Section -->
+<header class="flex flex-col gap-2 mb-12 border-b border-gray-300 dark:border-gray-800 pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">terminal</span>
+<h1 class="text-xl font-bold tracking-tight">Suckless Dotfiles</h1>
+</div>
+<nav class="flex gap-4 text-sm font-medium">
+<a class="suckless-link" href="#">Home</a>
+<span class="text-gray-400">|</span>
+<a class="suckless-link font-bold underline" href="#">Submit</a>
+<span class="text-gray-400">|</span>
+<a class="suckless-link" href="#">Top Rated</a>
+<span class="text-gray-400">|</span>
+<a class="suckless-link" href="#">About</a>
+</nav>
+</header>
+<!-- PageHeading Section -->
+<div class="mb-8">
+<h2 class="text-3xl font-bold tracking-tight mb-2">Submit your configuration</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm">Contribute to the collection of minimal, efficient, and bloat-free configurations.</p>
+</div>
+<!-- Form Section -->
+<form class="space-y-6 max-w-[600px]">
+<!-- TextField: Software Name -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">Software Name</label>
+<select
+            class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+            placeholder="e.g., dwm, st, nvim" type="text" id="select"/>
+	<option value="nvim">nvim</option>
+	<option value="dwm">dwm</option>
+</div>
+<!-- TextField: Repository URL -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+    Repository URL
+</label>
+<input
+            class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
+            placeholder="*Public repos only*" type="url" id="repo-url"/>
+</div>
+<!-- Submit Button (Browser Default Style) -->
+<div class="pt-4">
+ <button
+                class="browser-default-btn text-sm font-medium px-8 h-10 border dark:border-gray-600 text-gray-900 dark:text-white transition-colors"
+                type="submit" id="submit-btn">
+            Submit Dotfiles
+</button>
+</div>
+</form>
+<!-- Guidelines Footer Section -->
+<footer class="mt-20 pt-8 border-t border-dashed border-gray-300 dark:border-gray-800">
+<h3 class="text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+    <span class="material-symbols-outlined text-base">gavel</span>
+    Submission Guidelines
+</h3>
+<ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-none">
+<li class="flex items-start gap-2">
+    <span>Configurations should be minimal. Avoid excessive patching and "eye-candy" that slows down
+			performance.</span>
+</li>
+</ul>
+<div class="mt-12 text-[11px] text-gray-400 uppercase tracking-widest font-mono">
+    © 2024 Suckless Dotfiles Community. Keep it simple.
+</div>
+</footer>
+    </div>
+</body>
+
+</html>
