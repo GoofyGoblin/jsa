@@ -124,11 +124,18 @@
 				</div>
 				<div class="overflow-x-auto border border-slate-300 dark:border-slate-800">
 					<table class="w-full text-left border-collapse admin-table">
-												<thead>
-													<tr class="bg-slate-100 dark:bg-slate-900/50 border-b border-slate-300 dark:border-slate-800">
-														<th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 w-16 text-center">ID</th>
-														<th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 w-32">Software</th>
-														<th class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Description</th>
+						<thead>
+							<tr
+								class="bg-slate-100 dark:bg-slate-900/50 border-b border-slate-300 dark:border-slate-800">
+								<th
+									class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 w-16 text-center">
+									ID</th>
+								<th
+									class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 w-32">
+									Software</th>
+								<th
+									class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+									Description</th>
 								<th
 									class="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 w-24 text-center">
 									Score</th>
@@ -140,17 +147,6 @@
 						<tbody class="divide-y divide-slate-300 dark:divide-slate-800" id="admin-leaderboard-body">
 							<!-- Placeholder row to show style -->
 							<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-								<td class="px-4 py-3 text-sm font-medium text-center text-slate-500">1</td>
-								<td class="px-4 py-3 text-sm font-medium">dwm</td>
-								<td class="px-4 py-3 text-sm text-slate-500">Minimalist tiling WM config.</td>
-								<td class="px-4 py-3 text-sm font-bold text-primary text-center">9/10</td>
-								<td class="px-4 py-3 text-sm text-center space-x-2">
-									<button
-										class="text-blue-500 hover:underline text-xs font-bold uppercase">Edit</button>
-									<span class="text-slate-400">|</span>
-									<button
-										class="text-red-500 hover:underline text-xs font-bold uppercase">Delete</button>
-								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -167,7 +163,7 @@
 						<button id="close-modal"
 							class="material-symbols-outlined text-slate-500 hover:text-white">close</button>
 					</div>
-					<form id="edit-entry-form" class="space-y-4">
+					<form id="edit-form" class="space-y-4">
 						<input type="hidden" id="edit-id" />
 						<div class="flex flex-col gap-2">
 							<label

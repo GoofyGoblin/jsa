@@ -2,8 +2,15 @@ const editMenu = document.getElementById("edit-modal");
 const closeEditMenuBtn = document.getElementById("close-modal");
 const cancelEditMenuBtn = document.getElementById("cancel-edit");
 const sendEditMenuBtn = document.getElementById("send-edit");
+const getEditedSoftwareName = document.getElementById("edit-software-name");
+const getEditedSoftwareDesc = document.getElementById("edit-software-desc");
+const getEditedSoftwareScore = document.getElementById("edit-software-score");
 const url = "http://localhost:3030/dotfiles";
-window.openEditMenu = openEditMenu;
+let currentId;
+let currentRepoUrl;
+let currentUserId;
+window.start = start;
+window.deleteDotfilesList = deleteDotfilesList;
 async function getDotfilesData() {
 	try {
 		const response = await fetch(url);
@@ -27,14 +34,25 @@ function renderTodos(results) {
 								<td class="px-4 py-3 text-sm text-slate-500">${dotfiles.description}</td>
 								<td class="px-4 py-3 text-sm font-bold text-primary text-center">${dotfiles.score}</td>
 								<td class="px-4 py-3 text-sm text-center space-x-2">
-									<button class="text-blue-500 hover:underline text-xs font-bold uppercase" onclick="openEditMenu()">Edit</button>
+									<button class="text-blue-500 hover:underline text-xs font-bold uppercase" onclick="start('${dotfiles.id}', '${dotfiles.user_id}', '${dotfiles.repo_url}')">Edit</button>
 									<span class="text-slate-400">|</span>
-									<button class="text-red-500 hover:underline text-xs font-bold uppercase" onclick ="deleteDotfilesList()">Delete</button>
+									<button class="text-red-500 hover:underline text-xs font-bold uppercase" onclick ="deleteDotfilesList('${dotfiles.id}')">Delete</button>
 								</td>
 							</tr>
 		`;
 	})
-	document.querySelector("#admin-leaderboard-body").innerHTML = list;
+	list.forEach((e) => {
+		document.querySelector("#admin-leaderboard-body").innerHTML += e;
+	})
+}
+
+function start(id, user_id, repo_url) {
+	openEditMenu();
+	closeEditMenu();
+	sendEditMenuBtnHandler();
+	currentId = id;
+	currentRepoUrl = repo_url;
+	currentUserId = user_id;
 }
 
 function openEditMenu() {
@@ -49,14 +67,48 @@ function closeEditMenu() {
 		editMenu.classList.add("hidden");
 	})
 }
-closeEditMenu();
 
 function sendEditMenuBtnHandler() {
-	sendEditMenuBtn.addEventListener("click", () => {
+	sendEditMenuBtn.addEventListener("click", (e) => {
+		e.preventDefault();
 		editMenu.classList.add("hidden");
+		createUserObj();
 	})
 }
 
-async function sendEditMenu(id, name, repo_url, description, score) {
-
+function createUserObj(){
+	const userObj = {
+			"id": `${currentId}`,
+			"user_id": `${currentUserId}`,
+			"name": `${getEditedSoftwareName.value}`,
+			"repo_url": `${currentRepoUrl}`,
+			"description": `${getEditedSoftwareDesc.value}`,
+			"score": `${getEditedSoftwareScore.value} / 10`
+		}
+	sendEditMenu(userObj);
 }
+
+
+async function sendEditMenu(userObj) {
+	const sendEditMenu = await fetch(`http://localhost:3030/dotfiles/${userObj.id}`, {
+		method: 'PATCH',
+		headers: {"Content-type": "application/json"},
+		body: JSON.stringify(userObj)
+	})
+	if (!sendEditMenu) return;
+	if (!sendEditMenu.ok) {
+		alert("Something went wrong");
+	}
+	console.log("Sent");
+}
+
+async function deleteDotfilesList(id) {
+	const deleteDotfilesList = await fetch(`http://localhost:3030/dotfiles/${id}`, {
+		method: 'DELETE',
+		body: JSON.stringify(id)
+	})
+	if (!deleteDotfilesList) return;
+	if (!deleteDotfilesList.ok) {
+		alert("Something went wrong");
+	}
+} 

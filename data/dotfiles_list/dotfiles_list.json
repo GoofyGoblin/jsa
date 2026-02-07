@@ -1,20 +1,20 @@
 {
-	"dotfiles": [
-		{
-			"id": "1",
-			"user_id" : "1",
-			"name": "nvim",
-			"repo_url": "https://github.com/user/repo",
-			"description": "lorem ipsum",
-			"score": "5 / 10"
-		},
-		{
-			"id": "2",
-			"user_id" : "2",
-			"name": "dwm",
-			"repo_url": "https://github.com/user/repo",
-			"description": "lorem ipsum",
-			"score": "5 / 10"
-		}
-	]
+  "dotfiles": [
+    {
+      "id": "1",
+      "user_id": "1",
+      "name": "nvim",
+      "repo_url": "https://github.com/user/repo",
+      "description": "ffdsafads",
+      "score": "6 / 10"
+    },
+    {
+      "id": "2",
+      "user_id": "2",
+      "name": "dwm",
+      "repo_url": "https://github.com/user/repo",
+      "description": "lorem ipsum",
+      "score": "5 / 10"
+    }
+  ]
 }
