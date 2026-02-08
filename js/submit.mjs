@@ -93,7 +93,7 @@ async function fetchRepoContents(user, repo) {
 	if (userChoice === "nvim") {
 		dotfilesScore = await nvimOutputProcessor(res.json());
 	} else if (userChoice === "dwm") {
-		dotfilesScore = await dwmOutputProcessor(res.json());
+		dotfilesScore = await dwmOutputProcessor(res.json());console.log(dotfilesScore);
 	}
 }
 

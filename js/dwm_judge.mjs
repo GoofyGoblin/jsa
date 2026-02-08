@@ -1,6 +1,6 @@
 async function selectDwmPath(json) {
 	const data = await json;
-	return data.find((element) => element.name === "dwm");
+	return data.forEach((e) => e);
 }
 
 function parseRepoObj(repoObj) {
@@ -77,7 +77,7 @@ export async function dwmOutputProcessor(json) {
 	}
 	const { user, repo, path } = parseRepoObj(dwmData);
 	const urls = await fetchDwmConfigRepo(user, repo, path);
-	const filesArray = await fetchFilesContents(urls);
+	const filesArray = await fetchFilesContents(json);
 	const loc = lineCounter(filesArray);
 	const score = calcScore(loc);
 	return score;

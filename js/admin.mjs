@@ -10,7 +10,7 @@ let currentId;
 let currentRepoUrl;
 let currentUserId;
 window.start = start;
-window.deleteDotfilesList = deleteDotfilesList;
+window.confirmDeletion = confirmDeletion;
 async function getDotfilesData() {
 	try {
 		const response = await fetch(url);
@@ -36,7 +36,7 @@ function renderTodos(results) {
 								<td class="px-4 py-3 text-sm text-center space-x-2">
 									<button class="text-blue-500 hover:underline text-xs font-bold uppercase" onclick="start('${dotfiles.id}', '${dotfiles.user_id}', '${dotfiles.repo_url}')">Edit</button>
 									<span class="text-slate-400">|</span>
-									<button class="text-red-500 hover:underline text-xs font-bold uppercase" onclick ="deleteDotfilesList('${dotfiles.id}')">Delete</button>
+									<button class="text-red-500 hover:underline text-xs font-bold uppercase" onclick ="confirmDeletion('${dotfiles.id}')">Delete</button>
 								</td>
 							</tr>
 		`;
@@ -85,9 +85,16 @@ function createUserObj(){
 			"description": `${getEditedSoftwareDesc.value}`,
 			"score": `${getEditedSoftwareScore.value} / 10`
 		}
-	sendEditMenu(userObj);
+	confirmChanges(userObj);
 }
 
+function confirmDeletion(id) {
+	const confirmation = confirm("Are you sure you want to delete this dotfiles?");
+	if (!confirmation) {
+		return;
+	}
+	deleteDotfilesList(id);
+}
 
 async function sendEditMenu(userObj) {
 	const sendEditMenu = await fetch(`http://localhost:3030/dotfiles/${userObj.id}`, {
@@ -99,7 +106,6 @@ async function sendEditMenu(userObj) {
 	if (!sendEditMenu.ok) {
 		alert("Something went wrong");
 	}
-	console.log("Sent");
 }
 
 async function deleteDotfilesList(id) {

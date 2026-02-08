@@ -24,7 +24,9 @@ function renderTodos(results) {
 							<td class="px-4 py-4 text-sm font-bold text-primary text-right">${dotfiles.score}</td>
 		`;
 	})
-	document.querySelector("#leaderboard").innerHTML = list;
+	list.forEach((e) => {
+		document.querySelector("#leaderboard").innerHTML += e;
+	})
 }
 
 console.log(document.querySelector("#leaderboard"));
