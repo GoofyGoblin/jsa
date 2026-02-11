@@ -6,6 +6,9 @@ const getEditedSoftwareName = document.getElementById("edit-software-name");
 const getEditedSoftwareDesc = document.getElementById("edit-software-desc");
 const getEditedSoftwareScore = document.getElementById("edit-software-score");
 const url = "http://localhost:3030/dotfiles";
+const getAddedSoftwareName = document.getElementById("software-name");
+const getAddedSoftwareDesc = document.getElementById("software-desc");
+const getAddedRepoUrl = document.getElementById("repo-url");
 let currentId;
 let currentRepoUrl;
 let currentUserId;
@@ -117,4 +120,4 @@ async function deleteDotfilesList(id) {
 	if (!deleteDotfilesList.ok) {
 		alert("Something went wrong");
 	}
-} 
+}
