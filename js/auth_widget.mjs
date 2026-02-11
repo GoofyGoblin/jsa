@@ -17,7 +17,7 @@ function addWidget(user, headerContainer) {
         } else {
             const isLoginPage = window.location.pathname.endsWith('login.html');
             const isRegisterPage = window.location.pathname.endsWith('register.html');
-            checkIfLoggedIn(isLoginPage, isRegisterPage);
+            checkIfLoggedIn(isLoginPage, isRegisterPage, widget);
         }
         headerContainer.appendChild(widget);
     }
@@ -40,7 +40,7 @@ function checkIfLogout(widget){
     })
 }
 
-function checkIfLoggedIn(isLoginPage, isRegisterPage){
+function checkIfLoggedIn(isLoginPage, isRegisterPage, widget){
      if (!isLoginPage && !isRegisterPage) {
          widget.innerHTML = `
              <a href="login.html" class="text-primary hover:underline font-bold uppercase">Login</a>

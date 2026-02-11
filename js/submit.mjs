@@ -1,5 +1,6 @@
 import { nvimOutputProcessor } from "./nvim_judge.mjs";
 import { dwmOutputProcessor } from "./dwm_judge.mjs";
+import { isLoggedIn } from "./login.mjs";
 const token = process.env.GITHUB_API_KEY
 
 const userOption = document.getElementById("select");
@@ -50,6 +51,10 @@ function getUserChoice() {
 function getSubmitButton() {
 	document.getElementById("submit-btn").addEventListener("click", (e) => {
 		e.preventDefault();
+		if(isLoggedIn != true) {
+			alert("Make an account before submitting");
+			return
+		}
 		getGithubUrl();
 		getUserChoice();
 	})
