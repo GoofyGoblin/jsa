@@ -7,8 +7,10 @@ let userChoice = userOption.value;
 let dotfilesScore;
 let currentUserId;
 let currentDotfilesId;
+const description = document.getElementById("description").value;
+const repo_url = document.getElementById("repo-url").value;
 
-async function getCurrentUserId(){
+async function getCurrentUserId() {
 	let max = 0;
 	const res = await fetch('http://localhost:3000/accounts');
 	res.json()
@@ -23,7 +25,7 @@ async function getCurrentUserId(){
 }
 getCurrentUserId();
 
-async function getDotfilesId(){
+async function getDotfilesId() {
 	let max = 0;
 	const res = await fetch('http://localhost:3030/dotfiles');
 	res.json()
@@ -93,24 +95,35 @@ async function fetchRepoContents(user, repo) {
 	if (userChoice === "nvim") {
 		dotfilesScore = await nvimOutputProcessor(res.json());
 	} else if (userChoice === "dwm") {
-		dotfilesScore = await dwmOutputProcessor(res.json());console.log(dotfilesScore);
+		dotfilesScore = await dwmOutputProcessor(res.json());
 	}
+	createNewDotfileData();
 }
 
+function createNewDotfileData() {
+	const newDotfileData = {
+		"id": `${currentDotfilesId + 1}`,
+		"user_id": `${currentUserId}`,
+		"name": `${userChoice}`,
+		"repo_url": `${repo_url}`,
+		"description": `${description}`,
+		"score": `${dotfilesScore} / 10`
+	}
+	pushDotfilesData(newDotfileData);
+}
 
-async function pushDotfilesData() {
-	const res = fetch('http://localhost:3000/dotfiles', {
+async function pushDotfilesData(obj) {
+	console.log(obj);
+	const res = fetch('http://localhost:3030/dotfiles', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({
-			"id": `${currentDotfilesId}`,
-			"user_id" : `${currentUserId}`,
-			"name": `${userChoice}`,
-			"repo_url": "https://github.com/user/repo",
-			"score": `${dotfilesScore} / 10`
-		})
+		body: JSON.stringify(obj)
 	})
+	if (!res) return;
+	if (!res.ok) {
+		alert("Something went wrong");
+	}
 }
 

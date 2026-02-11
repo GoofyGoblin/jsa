@@ -97,4 +97,3 @@ function fetchFullfilledHandler(){
 function fetchUnfullfilledHandler(){
 	alert("Cant connect to server");
 }
-

@@ -29,7 +29,8 @@
 			text-underline-offset: 2px;
 		}
 	</style>
-	<script src="./js/dotfiles_list.mjs" type="module" defer></script>
+	<script src="./js/home.mjs" type="module" defer></script>
+	<script src="./js/auth_widget.mjs" type="module" defer></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
@@ -78,43 +79,7 @@
 								Suckless Score</th>
 						</tr>
 					</thead>
-					<tbody class="divide-y divide-slate-300 dark:divide-slate-800">
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">dwm</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Ultra-minimal tiling window
-								manager config. Clean C source.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">9 / 10</td>
-						</tr>
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">st</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Simple terminal with
-								scrollback patch and solarized dark colors.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">8 / 10</td>
-						</tr>
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">nvim</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Lua-based config,
-								absolutely no plugins. Built-in LSP only.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">10 / 10</td>
-						</tr>
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">slstatus</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Basic status bar for dwm.
-								Minimalist battery and clock.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">7 / 10</td>
-						</tr>
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">dmenu</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Patched with Xft and
-								border. Extremely fast application launcher.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">9 / 10</td>
-						</tr>
-						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">surf</td>
-							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">Webkit2 based browser. No
-								UI, just the web page.</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">6 / 10</td>
-						</tr>
+					<tbody class="divide-y divide-slate-300 dark:divide-slate-800" id="leaderboard">
 					</tbody>
 				</table>
 			</div>

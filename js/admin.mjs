@@ -85,7 +85,7 @@ function createUserObj(){
 			"description": `${getEditedSoftwareDesc.value}`,
 			"score": `${getEditedSoftwareScore.value} / 10`
 		}
-	confirmChanges(userObj);
+	sendEditMenu(userObj);
 }
 
 function confirmDeletion(id) {

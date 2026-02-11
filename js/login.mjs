@@ -33,20 +33,22 @@ getLoginBtn();
 function verifyLoginData(loginData) {
 	const accounts = loginData;
 	const account = accounts.find(account => account.username === username.value && account.password === password.value)
+	const isAdmin = accounts.find(()=> username.value === "admin");
 	console.log(account);
+	console.log(isAdmin);
 	if (!username.value || !password.value) {
 		alert("Please fill in all fields")
 		return
 	}
 	if (!account) {
 		alert("Invalid username or password")
+		return
 	}
+	if(isAdmin) {
+		localStorage.setItem("user", JSON.stringify(account));
+		window.location.href = "admin_dashboard.html"
+		return
+	}
+	localStorage.setItem("user", JSON.stringify(account));
 	window.location.href = "home.html";
-}
-
-function logUsersList(results) {
-	let list = results.map((todos) => {
-		return todos;
-	})
-	console.log(list);
 }

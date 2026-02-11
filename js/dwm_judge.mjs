@@ -1,6 +1,10 @@
-async function selectDwmPath(json) {
+import { fetchGithubData } from "./submit.mjs";
+async function selectDwmUrlPath(json) {
 	const data = await json;
-	return data.forEach((e) => e);
+	if (data.find((e) => e.contents_url) != false) {
+		return [0, data];
+	}
+	return data.find((e) => e.name === "dwm");
 }
 
 function parseRepoObj(repoObj) {
@@ -39,11 +43,7 @@ async function fetchFilesContents(urls) {
 	for (const url of urls) {
 		const res = await fetchGithubData(url);
 		const data = await res.json();
-		// fileContents.push(atob(data.content));
-		if (data.content.name.endsWith('.c' || data.content.name.endsWith('.h'))) {
-			;
-			fileContents.push(atob(data.content));
-		}
+		fileContents.push(atob(data.content));
 	}
 	return fileContents;
 }
@@ -71,14 +71,21 @@ function calcScore(loc) {
 }
 
 export async function dwmOutputProcessor(json) {
-	const dwmData = await selectDwmPath(json);
+	const dwmData = await selectDwmUrlPath(json);
 	if (!dwmData) {
 		return { score: 0 };
+	} else if (dwmData[0] === 0) {
+		const urls = dwmData[1].map((e) => e.git_url);
+		const filesArray = await fetchFilesContents(urls);
+		const loc = lineCounter(filesArray);
+		const score = calcScore(loc);
+		return score;
+	} else {
+		const { user, repo, path } = parseRepoObj(dwmData);
+		const urls = await fetchDwmConfigRepo(user, repo, path);
+		const filesArray = await fetchFilesContents(urls);
+		const loc = lineCounter(filesArray);
+		const score = calcScore(loc);
+		return score;
 	}
-	const { user, repo, path } = parseRepoObj(dwmData);
-	const urls = await fetchDwmConfigRepo(user, repo, path);
-	const filesArray = await fetchFilesContents(json);
-	const loc = lineCounter(filesArray);
-	const score = calcScore(loc);
-	return score;
 }

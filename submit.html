@@ -44,6 +44,7 @@
     }
 </style>
 <script src="./js/submit.mjs" type="module" defer></script>
+	<script src="./js/auth_widget.mjs" type="module" defer></script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 min-h-screen">
@@ -89,6 +90,15 @@
             class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9]"
             placeholder="*Public repos only*" type="url" id="repo-url"/>
 </div>
+<!-- TextField: Description -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+    Description
+</label>
+<textarea
+            class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary min-h-[160px] p-4 text-base placeholder:text-gray-400 dark:placeholder:text-[#9da6b9] resize-y"
+            placeholder="Explain why your configuration follows the suckless philosophy..." id="description"></textarea>
+</div>
 <!-- Submit Button (Browser Default Style) -->
 <div class="pt-4">
  <button
@@ -106,8 +116,19 @@
 </h3>
 <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-none">
 <li class="flex items-start gap-2">
+    <span class="text-primary mt-1">#</span>
     <span>Configurations should be minimal. Avoid excessive patching and "eye-candy" that slows down
 			performance.</span>
+</li>
+<li class="flex items-start gap-2">
+    <span class="text-primary mt-1">#</span>
+    <span>No external dependencies. Your config should be portable and follow the "software that sucks
+			less" manifest.</span>
+</li>
+<li class="flex items-start gap-2">
+    <span class="text-primary mt-1">#</span>
+    <span><strong class="text-red-500 dark:text-red-400">Warning:</strong> Bloat will be downvoted or
+			rejected by the community without notice.</span>
 </li>
 </ul>
 <div class="mt-12 text-[11px] text-gray-400 uppercase tracking-widest font-mono">
