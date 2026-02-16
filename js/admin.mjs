@@ -1,17 +1,26 @@
+import { fetchGithubData } from "./submit.mjs";
 const editMenu = document.getElementById("edit-modal");
 const closeEditMenuBtn = document.getElementById("close-modal");
 const cancelEditMenuBtn = document.getElementById("cancel-edit");
 const sendEditMenuBtn = document.getElementById("send-edit");
+
 const getEditedSoftwareName = document.getElementById("edit-software-name");
 const getEditedSoftwareDesc = document.getElementById("edit-software-desc");
 const getEditedSoftwareScore = document.getElementById("edit-software-score");
+
 const url = "http://localhost:3030/dotfiles";
-const getAddedSoftwareName = document.getElementById("software-name");
+
 const getAddedSoftwareDesc = document.getElementById("software-desc");
 const getAddedRepoUrl = document.getElementById("repo-url");
+const getPushBtn = document.getElementById("push-btn");
+const adminOption = document.getElementById("software-name-select");
+const getAddedSoftwareScore = document.getElementById("software-score");
+
 let currentId;
 let currentRepoUrl;
 let currentUserId;
+let adminChoice = adminOption.value;
+
 window.start = start;
 window.confirmDeletion = confirmDeletion;
 async function getDotfilesData() {
@@ -121,3 +130,23 @@ async function deleteDotfilesList(id) {
 		alert("Something went wrong");
 	}
 }
+
+function getAdminChoice() {
+	adminOption.addEventListener("change", (e) => {
+		adminOption = e.target.value;
+	})
+}
+getAdminChoice();
+
+function pushBtnClicked(){
+	getPushBtn.addEventListener("click", (e) => {
+		e.preventDefault();
+		const userObj = {
+			"name": `${adminChoice}`,
+			"repo_url": `${getAddedRepoUrl.value}`,
+			"description": `${getAddedSoftwareDesc.value}`,
+			"score": `${getAddedSoftwareScore.value} / 100`
+		}
+	})
+}
+pushBtnClicked();

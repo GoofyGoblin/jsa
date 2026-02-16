@@ -85,7 +85,7 @@
 							Name</label>
 						<select
 							class="form-input w-full rounded-none border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-gray-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-12 px-4 text-sm"
-							id="select">
+							id="software-name-select">
 							<option value="nvim">nvim</option>
 							<option value="dwm">dwm</option>
 						</select>
@@ -115,7 +115,7 @@
 					<div class="pt-2">
 						<button
 							class="browser-default-btn text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white"
-							type="submit">
+							type="submit" id = "push-btn">
 							Create Entry
 						</button>
 					</div>
@@ -173,9 +173,12 @@
 						<div class="flex flex-col gap-2">
 							<label class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Software
 								Name</label>
-							<input required
+							<select
 								class="form-input w-full rounded-none border border-slate-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-10 px-3 text-sm"
-								type="text" id="edit-software-name" />
+								type="text" id="edit-software-name">
+								<option value="nvim">nvim</option>
+								<option value="dwm">dwm</option>
+							</select>
 						</div>
 						<div class="flex flex-col gap-2">
 							<label
@@ -187,7 +190,7 @@
 						<div class="flex flex-col gap-2 w-32">
 							<label class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Score
 								(0-10)</label>
-							<input required min="0" max="10" step="1"
+							<input required min="0" max="100" step="1"
 								class="form-input w-full rounded-none border border-slate-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary h-10 px-3 text-sm"
 								type="number" id="edit-software-score" />
 						</div>

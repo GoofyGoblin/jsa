@@ -1,8 +1,7 @@
 import { nvimOutputProcessor } from "./nvim_judge.mjs";
 import { dwmOutputProcessor } from "./dwm_judge.mjs";
 import { isLoggedIn } from "./login.mjs";
-const token = process.env.GITHUB_API_KEY
-
+const token = "token"
 const userOption = document.getElementById("select");
 let userChoice = userOption.value;
 let dotfilesScore;
