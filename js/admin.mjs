@@ -1,4 +1,3 @@
-import { fetchGithubData } from "./submit.mjs";
 const editMenu = document.getElementById("edit-modal");
 const closeEditMenuBtn = document.getElementById("close-modal");
 const cancelEditMenuBtn = document.getElementById("cancel-edit");
@@ -20,6 +19,7 @@ let currentId;
 let currentRepoUrl;
 let currentUserId;
 let adminChoice = adminOption.value;
+let result;
 
 window.start = start;
 window.confirmDeletion = confirmDeletion;
@@ -29,7 +29,7 @@ async function getDotfilesData() {
 		if (!response.ok) {
 			throw new error(`response status ${response.status}`);
 		}
-		const result = await response.json();
+		result = await response.json();
 		renderTodos(result);
 	} catch (error) {
 		console.log(error.message);
@@ -67,6 +67,7 @@ function start(id, user_id, repo_url) {
 	currentUserId = user_id;
 }
 
+
 function openEditMenu() {
 	editMenu.classList.remove("hidden");
 }
@@ -95,7 +96,7 @@ function createUserObj(){
 			"name": `${getEditedSoftwareName.value}`,
 			"repo_url": `${currentRepoUrl}`,
 			"description": `${getEditedSoftwareDesc.value}`,
-			"score": `${getEditedSoftwareScore.value} / 10`
+			"score": `${getEditedSoftwareScore.value} / 100`
 		}
 	sendEditMenu(userObj);
 }
@@ -116,6 +117,18 @@ async function sendEditMenu(userObj) {
 	})
 	if (!sendEditMenu) return;
 	if (!sendEditMenu.ok) {
+		alert("Something went wrong");
+	}
+}
+
+async function sendNewEditMenu(userObj) {
+	const sendNewEditMenu = await fetch("http://localhost:3030/dotfiles", {
+		method: 'POST',
+		headers: {"Content-type": "application/json"},
+		body: JSON.stringify(userObj)
+	})
+	if (!sendNewEditMenu) return;
+	if (!sendNewEditMenu.ok) {
 		alert("Something went wrong");
 	}
 }
@@ -141,12 +154,16 @@ getAdminChoice();
 function pushBtnClicked(){
 	getPushBtn.addEventListener("click", (e) => {
 		e.preventDefault();
-		const userObj = {
+		const newUserObj = {
+			"id": `${result.length + 1}`,
+			"user_id": `1`,
 			"name": `${adminChoice}`,
 			"repo_url": `${getAddedRepoUrl.value}`,
 			"description": `${getAddedSoftwareDesc.value}`,
 			"score": `${getAddedSoftwareScore.value} / 100`
 		}
+		console.log(newUserObj);
+		sendNewEditMenu(newUserObj);
 	})
 }
 pushBtnClicked();

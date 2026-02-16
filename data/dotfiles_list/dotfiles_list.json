@@ -15,6 +15,14 @@
       "repo_url": "https://github.com/SylvanFranklin/.config/tree/main/nvim",
       "description": "stuff blah blah balh",
       "score": "59.8 / 100"
+    },
+    {
+      "id": "3",
+      "user_id": "1",
+      "name": "nvim",
+      "repo_url": "das",
+      "description": "dsa",
+      "score": "5 / 100"
     }
   ]
 }
