@@ -55,10 +55,16 @@
 		</header>
 		<!-- HeadlineText Section -->
 		<main class="flex-1">
-			<div class="mb-6">
-				<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Leaderboard</h2>
-				<p class="text-sm text-slate-500 dark:text-slate-400">The most highly rated minimalist configurations.
-				</p>
+			<div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+				<div>
+					<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Leaderboard</h2>
+					<p class="text-sm text-slate-500 dark:text-slate-400">The most highly rated minimalist configurations.
+					</p>
+				</div>
+				<div class="w-full md:w-64">
+					<input type="text" id="leaderboard-search" placeholder="Search..." 
+						class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors text-slate-900 dark:text-slate-100" />
+				</div>
 			</div>
 			<!-- Table Component (Standardized for Suckless Style) -->
 			<div class="overflow-x-auto border border-slate-300 dark:border-slate-800">

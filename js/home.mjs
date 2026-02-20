@@ -15,7 +15,7 @@ async function getDotfilesData() {
 getDotfilesData();
 
 function renderTodos(results) {
-	results = results.reverse();
+	results = results.reverse((a, b) => b.score - a.score);
 	let list = results.map((dotfiles) => {
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
@@ -29,4 +29,3 @@ function renderTodos(results) {
 	})
 }
 
-console.log(document.querySelector("#leaderboard"));

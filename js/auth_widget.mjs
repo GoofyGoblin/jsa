@@ -27,8 +27,7 @@ function addUser(widget, user){
     widget.innerHTML = `
         <div class = "text-right">
         <div class="font-bold text-slate-900 dark: text-white">${user.username}</div>
-        <div class="text-slate-300 dark:text-slate-700">|</div>
-        <button id="logout-btn" class="text-primary hover:underline font-bold uppercase">Logout</button>
+		<button id="logout-btn" class="text-primary hover:underline font-bold uppercase">Logout</button>
         `;
     checkIfLogout(widget);
 }

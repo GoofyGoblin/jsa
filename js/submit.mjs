@@ -4,41 +4,22 @@ const token = "token"
 const userOption = document.getElementById("select");
 let userChoice = userOption.value;
 let dotfilesScore;
-let currentUserId;
-let currentDotfilesId;
+let max = 0;
 const description = document.getElementById("description").value;
 const repo_url = document.getElementById("repo-url").value;
 
-async function getCurrentUserId() {
-	let max = 0;
-	const res = await fetch('http://localhost:3000/accounts');
-	res.json()
-		.then((data) => {
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].user_id > max) {
-					max = data[i].user_id;
-				}
-			}
-		})
-	currentUserId = max + 1;
+function getCurrentUserId() {
+	let currentUserId;
+	const user = JSON.parse(localStorage.getItem('user'));
+	currentUserId = user.user_id;
+	return currentUserId;
 }
-getCurrentUserId();
 
 async function getDotfilesId() {
-	let max = 0;
 	const res = await fetch('http://localhost:3030/dotfiles');
-	res.json()
-		.then((data) => {
-			for (let i = 0; i < data.length; i++) {
-				if (data[i].id > max) {
-					max = data[i].id;
-				}
-			}
-		})
-	currentDotfilesId = max + 1;
+	const data = JSON.parse(await res.text());
+	return data.length;
 }
-
-getDotfilesId();
 
 function getUserChoice() {
 	userOption.addEventListener("change", (e) => {
@@ -58,6 +39,7 @@ function getSubmitButton() {
 		getUserChoice();
 	})
 }
+getSubmitButton();
 
 function checkIfLoggedIn() {
 	const user = localStorage.getItem('user');
@@ -67,7 +49,6 @@ function checkIfLoggedIn() {
 	return false;
 }
 
-getSubmitButton();
 
 function getGithubUrl() {
 	if (document.getElementById("repo-url").value === "") {
@@ -112,7 +93,9 @@ async function fetchRepoContents(user, repo) {
 	createNewDotfileData();
 }
 
-function createNewDotfileData() {
+async function createNewDotfileData() {
+	const currentUserId = await getCurrentUserId();
+	const currentDotfilesId = await getDotfilesId();
 	const newDotfileData = {
 		"id": `${currentDotfilesId + 1}`,
 		"user_id": `${currentUserId}`,
@@ -121,7 +104,20 @@ function createNewDotfileData() {
 		"description": `${description}`,
 		"score": `${dotfilesScore} / 10`
 	}
-	pushDotfilesData(newDotfileData);
+	checkForRepeatSubmission(newDotfileData);
+	console.log(newDotfileData);
+}
+
+async function checkForRepeatSubmission(repo_data) {
+	const res = await fetch('http://localhost:3030/dotfiles');
+	const data = JSON.parse(await res.text());
+	data.forEach((e) => {
+		if (e.repo_url === repo_data.repo_url) {
+			alert("You have already submitted this repo");
+			return;
+		} 
+	})
+	pushDotfilesData(repo_url);
 }
 
 async function pushDotfilesData(obj) {
@@ -133,8 +129,5 @@ async function pushDotfilesData(obj) {
 		body: JSON.stringify(obj)
 	})
 	if (!res) return;
-	if (res.ok) {
-		window.location.href = "home.html"
-	}
 }
 
