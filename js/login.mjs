@@ -1,10 +1,7 @@
 // get user input
-export let isLoggedIn;
 const username = document.querySelector("#username-btn");
 const password = document.querySelector("#password-btn");
 const loginBtn = document.querySelector("#login-btn");
-// fetching the json api
-const accountUrl = "http://localhost:3000/accounts"
 async function getUserData() {
 	const url = "http://localhost:3000/accounts";
 	try {
@@ -48,10 +45,8 @@ function verifyLoginData(loginData) {
 	if(isAdmin) {
 		localStorage.setItem("user", JSON.stringify(account));
 		window.location.href = "admin_dashboard.html"
-		isLoggedIn = true;
 		return
 	}
 	localStorage.setItem("user", JSON.stringify(account));
 	window.location.href = "home.html";
-	isLoggedIn = true;
 }

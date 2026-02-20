@@ -1,6 +1,5 @@
 import { nvimOutputProcessor } from "./nvim_judge.mjs";
 import { dwmOutputProcessor } from "./dwm_judge.mjs";
-import { isLoggedIn } from "./login.mjs";
 const token = "token"
 const userOption = document.getElementById("select");
 let userChoice = userOption.value;
@@ -50,13 +49,22 @@ function getUserChoice() {
 function getSubmitButton() {
 	document.getElementById("submit-btn").addEventListener("click", (e) => {
 		e.preventDefault();
-		if(isLoggedIn != true) {
-			alert("Make an account before submitting");
-			return
+		const checkLoggedIn = checkIfLoggedIn();
+		if (!checkLoggedIn) {
+			alert("Please create an account before submitting")
+			return;
 		}
 		getGithubUrl();
 		getUserChoice();
 	})
+}
+
+function checkIfLoggedIn() {
+	const user = localStorage.getItem('user');
+	if (user) {
+		return true;
+	}
+	return false;
 }
 
 getSubmitButton();
@@ -117,7 +125,6 @@ function createNewDotfileData() {
 }
 
 async function pushDotfilesData(obj) {
-	console.log(obj);
 	const res = fetch('http://localhost:3030/dotfiles', {
 		method: 'POST',
 		headers: {
@@ -126,8 +133,8 @@ async function pushDotfilesData(obj) {
 		body: JSON.stringify(obj)
 	})
 	if (!res) return;
-	if (!res.ok) {
-		alert("Something went wrong");
+	if (res.ok) {
+		window.location.href = "home.html"
 	}
 }
 
