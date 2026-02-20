@@ -7,7 +7,7 @@ async function getDotfilesData() {
 			throw new error(`response status ${response.status}`);
 		}
 		const result = await response.json();
-		renderTodos(result);
+		renderTodos(result.splice(0, 5));
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -15,6 +15,7 @@ async function getDotfilesData() {
 getDotfilesData();
 
 function renderTodos(results) {
+	results = results.reverse();
 	let list = results.map((dotfiles) => {
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
