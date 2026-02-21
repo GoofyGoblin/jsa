@@ -7,19 +7,33 @@ async function getDotfilesData() {
 			throw new error(`response status ${response.status}`);
 		}
 		const result = await response.json();
-		renderTodos(result.splice(0, 5));
+		renderDotfiles(result.splice(0, 5));
 	} catch (error) {
 		console.log(error.message);
 	}
 }
 getDotfilesData();
 
-function renderTodos(results) {
-	results = results.reverse((a, b) => b.score - a.score);
+async function getUserData() {
+	const res = await fetch('http://localhost:3000/accounts');
+	const data = JSON.parse(await res.text());
+	return data;
+} 
+
+function getUsername(data, user_id) {
+	const user = data.find((e) => e.user_id === user_id);
+	return user.username;
+}
+
+
+async function renderDotfiles(results) {
+	const userData = await getUserData();
+	results = results.sort((a, b) => b.id - a.id);
 	let list = results.map((dotfiles) => {
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${dotfiles.name}</td>
+							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${getUsername(userData, dotfiles.user_id)}</td>
 							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">${dotfiles.description}</td>
 							<td class="px-4 py-4 text-sm font-bold text-primary text-right">${dotfiles.score}</td>
 		`;
