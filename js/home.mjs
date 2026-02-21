@@ -35,7 +35,7 @@ async function renderDotfiles(results) {
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${dotfiles.name}</td>
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${getUsername(userData, dotfiles.user_id)}</td>
 							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">${dotfiles.description}</td>
-							<td class="px-4 py-4 text-sm font-bold text-primary text-right">${dotfiles.score}</td>
+							<td class="px-4 py-4 text-sm font-bold text-primary text-right">${dotfiles.score} / 100</td>
 		`;
 	})
 	list.forEach((e) => {

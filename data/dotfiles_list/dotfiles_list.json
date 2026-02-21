@@ -6,7 +6,7 @@
       "name": "dwm",
       "repo_url": "https://github.com/user/repo",
       "description": "dsadsa",
-      "score": "6 / 100"
+      "score": "6"
     },
     {
       "id": "2",
@@ -14,7 +14,7 @@
       "name": "nvim",
       "repo_url": "https://github.com/SylvanFranklin/.config/tree/main/nvim",
       "description": "stuff blah blah balh",
-      "score": "59.8 / 100"
+      "score": "59.8"
     },
     {
       "id": "3",
@@ -22,7 +22,7 @@
       "name": "nvim",
       "repo_url": "das",
       "description": "dsa",
-      "score": "5 / 100"
+      "score": "5"
     }
   ]
 }

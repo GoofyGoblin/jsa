@@ -102,7 +102,7 @@ async function createNewDotfileData() {
 		"name": `${userChoice}`,
 		"repo_url": `${repo_url}`,
 		"description": `${description}`,
-		"score": `${dotfilesScore} / 10`
+		"score": dotfilesScore
 	}
 	checkForRepeatSubmission(newDotfileData);
 	console.log(newDotfileData);
