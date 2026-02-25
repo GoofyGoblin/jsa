@@ -5,48 +5,62 @@
       "username": "admin",
       "password": "123456",
       "email": "admin@example.com",
-      "role": "admin"
+      "role": "admin",
+      "id": "e27c"
     },
     {
       "user_id": "2",
       "username": "user1",
       "password": "123456",
       "email": "user1@example.com",
-      "role": "user"
+      "role": "user",
+      "id": "afac"
     },
     {
       "user_id": "3",
       "username": "asd",
       "email": "asd@mail.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "id": "3c67"
     },
     {
       "user_id": "4",
       "username": "test",
       "email": "test@mail.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "id": "dadc"
     },
     {
       "user_id": "5",
       "username": "test2",
       "email": "test2@mail.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "id": "04ed"
     },
     {
       "user_id": "6",
       "username": "test3",
       "email": "test3@mail.com",
       "password": "123",
-      "role": "user"
+      "role": "user",
+      "id": "ad85"
     },
     {
       "user_id": "7",
       "username": "test4",
       "email": "test4@mail.com",
       "password": "123",
+      "role": "user",
+      "id": "46a5"
+    },
+    {
+      "id": "47",
+      "username": "user2",
+      "email": "user2@mail.com",
+      "password": "123456",
       "role": "user"
     }
   ]
