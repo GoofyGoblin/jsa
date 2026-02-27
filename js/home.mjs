@@ -9,7 +9,7 @@ async function getDotfilesData() {
 		const result = await response.json();
 		renderDotfiles(result.splice(0, 5));
 	} catch (error) {
-		console.log(error.message);
+		//console.log(error.message);
 	}
 }
 getDotfilesData();

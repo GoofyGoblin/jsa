@@ -79,7 +79,7 @@ export async function dwmOutputProcessor(json) {
         const filesArray = await fetchFilesContents(urls);
         const loc = lineCounter(filesArray);
         const score = calcScore(loc);
-        console.log(score);
+        //console.log(score);
         return score;
     } else {
         const { user, repo, path } = parseRepoObj(dwmData);
@@ -87,7 +87,7 @@ export async function dwmOutputProcessor(json) {
         const filesArray = await fetchFilesContents(urls);
         const loc = lineCounter(filesArray);
         const score = calcScore(loc);
-        console.log(score);
+        //console.log(score);
         return score;
     }
 }

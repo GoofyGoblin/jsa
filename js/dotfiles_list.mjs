@@ -10,7 +10,7 @@ async function getDotfilesData() {
 		const result = await response.json();
 		return result;
 	} catch (error) {
-		console.log(error.message);
+		//console.log(error.message);
 	}
 }
 
@@ -24,7 +24,7 @@ getDotfilesData();
 async function createEntries(result, inputValue) {
 	let topEntry;
 	let fullEntry;
-	console.log(inputValue);
+	//console.log(inputValue);
 	const data = await getDotfilesData();
 	if (result.length === 0 || inputValue == "") {
 		topEntry = data.splice(0, 5);

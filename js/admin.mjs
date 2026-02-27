@@ -32,7 +32,7 @@ async function getDotfilesData() {
         result = await response.json();
         renderTodos(result);
     } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
     }
 }
 getDotfilesData();
@@ -162,7 +162,7 @@ function pushBtnClicked() {
             "description": `${getAddedSoftwareDesc.value}`,
             "score": `${getAddedSoftwareScore.value} / 100`
         }
-        console.log(newUserObj);
+        //console.log(newUserObj);
         sendNewEditMenu(newUserObj);
     })
 }

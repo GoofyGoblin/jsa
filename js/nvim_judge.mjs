@@ -6,10 +6,10 @@ async function selectNvimPath(json) {
 }
 
 function parseRepoObj(repoObj) {
-    console.log(repoObj);
+    //console.log(repoObj);
 	const url = new URL(repoObj.html_url);
 	const [user, repo] = url.pathname.split("/").filter(Boolean);
-    console.log(user, repo, repoObj.path);
+    //console.log(user, repo, repoObj.path);
 	return { user, repo, path: repoObj.path };
 }
 

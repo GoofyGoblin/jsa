@@ -24,5 +24,5 @@ server.use((req, res, next) => {
 
 server.use(router);
 server.listen(3030, () => {
-  console.log("JSON Server is running");
+  //console.log("JSON Server is running");
 });

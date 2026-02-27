@@ -54,7 +54,7 @@ function getGithubUrl() {
     if (document.getElementById("repo-url").value === "") {
         alert("Please enter a repo URL");
     }
-    console.log(document.getElementById("repo-url").value);
+    //console.log(document.getElementById("repo-url").value);
     parseGithubUrl(document.getElementById("repo-url").value);
 }
 
@@ -76,7 +76,7 @@ export async function fetchGithubData(url) {
         });
         return res;
     } catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 }
 
@@ -111,7 +111,7 @@ async function checkForRepeatSubmission(repo_data) {
     let check = true;
     const res = await fetch('http://localhost:3030/dotfiles');
     const data = JSON.parse(await res.text());
-    console.log(data);
+    //console.log(data);
     data.forEach((e) => {
         if (e.repo_url === repo_data.repo_url) {
             check = false;
@@ -139,9 +139,9 @@ async function pushDotfilesData(obj) {
             return res.json();
         })
         .then(data => {
-            console.log("Success: ", data);
+            //console.log("Success: ", data);
         })
         .catch(error => {
-            console.log("Error: ", error);
+            //console.log("Error: ", error);
         })
 }

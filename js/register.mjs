@@ -72,7 +72,7 @@ function createNewAccountObj(idValue, usernameValue, emailValue, passwordValue) 
 		password: passwordValue,
 		role: "user",
 	}
-	console.log(newAccount);
+	//console.log(newAccount);
 	sendNewAccount(newAccount);
 }
 
