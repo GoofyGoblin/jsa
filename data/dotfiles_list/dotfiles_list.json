@@ -23,6 +23,22 @@
       "repo_url": "das",
       "description": "dsa",
       "score": "5"
+    },
+    {
+      "id": "4",
+      "user_id": "1",
+      "name": "dwm",
+      "repo_url": "https://github.com/GoofyGoblin/suckless_stuff",
+      "description": "my config",
+      "score": "100"
+    },
+    {
+      "id": "5",
+      "user_id": "2",
+      "name": "nvim",
+      "repo_url": "https://github.com/SylvanFranklin/.config",
+      "description": "",
+      "score": "59.8"
     }
   ]
 }

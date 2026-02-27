@@ -1,6 +1,6 @@
 const jsonServer = require("json-server");
 const server = jsonServer.create();
-const router = jsonServer.router("todo.json");
+const router = jsonServer.router("dotfiles_list.json");
 const middlewares = jsonServer.defaults({ static: "./" });
 
 // Set default middlewares (logger, static, cors and no-cache)
@@ -23,6 +23,6 @@ server.use((req, res, next) => {
 });
 
 server.use(router);
-server.listen(3000, () => {
+server.listen(3030, () => {
   console.log("JSON Server is running");
 });

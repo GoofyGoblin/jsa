@@ -40,7 +40,7 @@ getDotfilesData();
 function renderTodos(results) {
     let list = results.map((dotfiles) => {
         return `
-							<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
 								<td class="px-4 py-3 text-sm font-medium text-center text-slate-500">${dotfiles.id}</td>
 								<td class="px-4 py-3 text-sm font-medium">${dotfiles.name}</td>
 								<td class="px-4 py-3 text-sm text-slate-500">${dotfiles.description}</td>
@@ -96,7 +96,7 @@ function createUserObj() {
         "name": `${getEditedSoftwareName.value}`,
         "repo_url": `${currentRepoUrl}`,
         "description": `${getEditedSoftwareDesc.value}`,
-        "score": `${getEditedSoftwareScore.value} / 100`
+        "score": `${getEditedSoftwareScore.value}`
     }
     sendEditMenu(userObj);
 }

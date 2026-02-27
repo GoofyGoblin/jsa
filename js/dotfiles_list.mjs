@@ -47,16 +47,18 @@ async function renderDotfiles(topResults, fullResults) {
 	let result;
 	const userData = await getUserData();
 	const url = window.location.href;
-	if (url.endsWith(("leaderboard.html"))) {
+	if (url.endsWith(("full_leaderboard.html"))) {
 		result = fullResults;
 	} else {
 		result = topResults;
 	}
 	result.sort((a, b) => b.score - a.score);
+    let rank = 0;
 	let list = result.map((dotfiles) => {
+        rank++;
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${"rank"}</td>
+							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${rank}</td>
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${dotfiles.name}</td>
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${getUsername(userData, dotfiles.user_id)}</td>
 							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">${dotfiles.description}</td>
@@ -103,5 +105,3 @@ async function getSearchResults(inputValue) {
 	const filteredData = filterSearchResults(dotfilesData, userData, inputValue);
 	createEntries(filteredData, inputValue);
 }
-
-
