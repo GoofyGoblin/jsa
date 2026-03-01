@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<title>User Profile - Suckless Ratings</title>
+	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+		rel="stylesheet" />
+	<script src="tailwind.config.js" defer></script>
+	<style>
+		body {
+			font-family: 'Fira Code', sans-serif;
+			text-rendering: optimizeLegibility;
+		}
+
+		/* Custom underline for links to match suckless aesthetic */
+		.suckless-link {
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 2px;
+		}
+
+		.mono-text {
+			font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+		}
+	</style>
+	<script src="./js/profile.mjs" type="module" defer></script>
+	<script src="./js/auth_widget.mjs" type="module" defer></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+	<div class="max-w-[960px] mx-auto px-6 py-8">
+		<!-- TopNavBar -->
+		<header class="border-b border-slate-300 dark:border-slate-800 pb-4 mb-8">
+			<div class="flex flex-col gap-4">
+				<div class="flex items-center gap-2">
+					<span aria-hidden="true" class="material-symbols-outlined text-primary">terminal</span>
+					<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white uppercase">
+						Suckless Ratings
+					</h1>
+				</div>
+				<nav class="flex flex-wrap items-center gap-2 text-sm font-medium">
+					<a class="text-primary suckless-link" href="home.html">Home</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="submit.html">Submit</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="leaderboard.html">Leaderboard</a>
+					<span class="text-slate-400">|</span>
+					<a class="text-primary suckless-link" href="about.html">About</a>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Profile Section -->
+		<main class="flex-1">
+			<section class="mb-12">
+				<div class="flex flex-col gap-4">
+					<div class="flex items-center gap-4">
+						<div class="w-20 h-20 bg-slate-200 dark:bg-slate-800 flex items-center justify-center border border-slate-300 dark:border-slate-700">
+							<span class="material-symbols-outlined text-4xl text-slate-400">person</span>
+						</div>
+						<div>
+							<h2 id="user-username" class="text-3xl font-bold text-slate-900 dark:text-white uppercase tracking-tighter">
+								Username
+							</h2>
+							<p id="user-role" class="text-xs font-bold uppercase tracking-widest text-primary mt-1">Contributor</p>
+						</div>
+					</div>
+
+					<div class="flex gap-6 text-xs font-medium uppercase tracking-widest text-slate-500 mono-text">
+						<span>Submissions: <span id="user-submission-count" class="text-slate-900 dark:text-white">0</span></span>
+						<span>Average Score: <span id="user-avg-score" class="text-slate-900 dark:text-white">N/A</span></span>
+					</div>
+				</div>
+			</section>
+
+			<!-- User Submissions -->
+			<section class="mb-12">
+				<div class="mb-6 flex items-center gap-2">
+					<span class="text-primary text-xl font-bold">#</span>
+					<h3 class="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">Recent Submissions</h3>
+				</div>
+
+				<div class="overflow-x-auto border border-slate-300 dark:border-slate-800">
+					<table class="w-full text-left border-collapse">
+						<thead>
+							<tr class="bg-slate-100 dark:bg-slate-900/50 border-b border-slate-300 dark:border-slate-800">
+								<th class="px-4 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Software</th>
+								<th class="px-4 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Description</th>
+								<th class="px-4 py-3 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 text-right">Score</th>
+							</tr>
+						</thead>
+						<tbody id="user-submissions-list" class="divide-y divide-slate-300 dark:divide-slate-800">
+							<!-- Will be populated by JS -->
+							<tr>
+								<td colspan="3" class="px-4 py-8 text-center text-sm text-slate-500 italic">
+									No submissions found for this user.
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</main>
+
+		<!-- Footer -->
+		<footer class="mt-20 pt-8 border-t border-slate-300 dark:border-slate-800">
+			<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+				<div>
+					<p>© 2026 Suckless Ratings. Built with simplicity. No bloat.</p>
+				</div>
+				<div class="text-center md:text-right mono-text text-[10px] uppercase">
+					<p>Status: <span class="text-green-500">Minimalist</span></p>
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
+
+</html>
