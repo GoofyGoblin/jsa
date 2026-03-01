@@ -1,6 +1,11 @@
 // fetching the json api
 const dotfilesUrl = "http://localhost:3030/dotfiles";
 const accountsUrl = "http://localhost:3000/accounts";
+const usersUsername = document.getElementById('user-username');
+const usersRole = document.getElementById('user-role');
+const usersSubmitCount = document.getElementById('user-submission-count');
+const usersAvgScore = document.getElementById('user-avg-score');
+const tableBody = document.getElementById('user-submissions-list');
 
 async function getDotfilesData() {
     try {
@@ -28,30 +33,54 @@ async function getUserData() {
     }
 }
 
-async function renderProfile() {
+function getUsername() {
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('username');
     if (!username) {
         return;
     }
+    return username;
+}
+
+async function getUser(username) {
     const userData = await getUserData();
+    return userData.find(u => u.username === username);
+}
+
+async function getDotfiles(user) {
     const dotfilesData = await getDotfilesData();
-    const user = userData.find(u => u.username === username);
+    return dotfilesData.filter(d => d.user_id === user.user_id);
+}
+
+function calcAvgScore(dotfiles) {
+    let avgScore = "N/A";
+    if (dotfiles.length > 0) {
+        const totalScore = dotfiles.reduce((sum, d) => sum + parseFloat(d.score || 0), 0);
+        avgScore = (totalScore / dotfiles.length).toFixed(1);
+    }
+    return avgScore;
+}
+
+function updateDom(user, dotfiles, score) {
+    usersUsername.innerText = user.username;
+    usersRole.innerText = user.role;
+    usersSubmitCount.innerText = dotfiles.length;
+    usersAvgScore.innerText = score;
+}
+
+async function renderProfile() {
+    const username = getUsername();
+
+    const user = await getUser(username);
     if (!user) {
         document.getElementById('user-username').innerText = "User not found";
         return;
     }
-    const userDotfiles = dotfilesData.filter(d => d.user_id === user.user_id || d.user_id === user.id);
-    let avgScore = "N/A";
-    if (userDotfiles.length > 0) {
-        const totalScore = userDotfiles.reduce((sum, d) => sum + parseFloat(d.score || 0), 0);
-        avgScore = (totalScore / userDotfiles.length).toFixed(1);
-    }
-    document.getElementById('user-username').innerText = user.username;
-    document.getElementById('user-role').innerText = user.role || "Contributor";
-    document.getElementById('user-submission-count').innerText = userDotfiles.length;
-    document.getElementById('user-avg-score').innerText = avgScore;
-    const tableBody = document.getElementById('user-submissions-list');
+    const userDotfiles = await getDotfiles(user);
+    const avgScore = calcAvgScore(userDotfiles);
+
+    updateDom(user, userDotfiles, avgScore);
+
     if (userDotfiles.length > 0) {
         tableBody.innerHTML = "";
         userDotfiles.forEach(dotfile => {
@@ -65,5 +94,4 @@ async function renderProfile() {
         });
     }
 }
-
 renderProfile();
