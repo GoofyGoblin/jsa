@@ -10,7 +10,7 @@ async function getDotfilesData() {
 		const result = await response.json();
 		return result;
 	} catch (error) {
-		//console.log(error.message);
+		console.log(error.message);
 	}
 }
 
@@ -25,17 +25,20 @@ async function createEntries(result, inputValue) {
 	let topEntry;
 	let fullEntry;
 	//console.log(inputValue);
-	const data = await getDotfilesData();
-	if (result.length === 0 || inputValue == "") {
-		topEntry = data.splice(0, 5);
-		fullEntry = data;
-	} else {
-		topEntry = result.splice(0, 5);
-		fullEntry = result;
-	}
-	renderDotfiles(topEntry, fullEntry);
+	let data = await getDotfilesData();
+    data = data.sort((a, b) => b.score - a.score);
+    topEntry = data.splice(0, 3);
+    if (result.length === 0 || inputValue === "") {
+        fullEntry = await getDotfilesData();
+        // fullEntry = fullEntry.sort((a, b) => b.score - a.score);
+    }
+    else {
+        fullEntry = result;
+        // fullEntry = fullEntry.sort((a, b) => b.score - a.score);
+    }
+    renderDotfiles(topEntry, fullEntry);
 }
-createEntries([]);
+createEntries([], []);
 
 
 function getUsername(data, user_id) {
@@ -47,7 +50,10 @@ async function renderDotfiles(topResults, fullResults) {
 	let result;
 	const userData = await getUserData();
 	const url = window.location.href;
-	if (url.endsWith(("full_leaderboard.html"))) {
+    const urlArray = url.split("");
+    console.log(fullResults);
+    console.log(topResults);
+	if (urlArray.find((e) => e === "f") === "f") {
 		result = fullResults;
 	} else {
 		result = topResults;
@@ -56,11 +62,14 @@ async function renderDotfiles(topResults, fullResults) {
     let rank = 0;
 	let list = result.map((dotfiles) => {
         rank++;
+        const username = getUsername(userData, dotfiles.user_id);
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${rank}</td>
+							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">
+                                <a href="profile.html?username=${username}" class="suckless-link">${username}</a>
+                            </td>
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${dotfiles.name}</td>
-							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${getUsername(userData, dotfiles.user_id)}</td>
 							<td class="px-4 py-4 text-sm text-slate-600 dark:text-slate-400">${dotfiles.description}</td>
 							<td class="px-4 py-4 text-sm font-bold text-primary text-right">${dotfiles.score} / 100</td>
 		`;
