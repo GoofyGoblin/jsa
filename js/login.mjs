@@ -30,9 +30,9 @@ getLoginBtn();
 
 function verifyLoginData(loginData) {
 	const accounts = loginData;
-	const account = accounts.find(account => account.username === username.value && account.password === password.value)
+	let account = accounts.find(account => account.username === username.value)
 	const isAdmin = accounts.find(()=> username.value === "admin");
-	//console.log(account);
+	// console.log(account);
 	//console.log(isAdmin);
 	if (!username.value || !password.value) {
 		alert("Please fill in all fields")
@@ -43,10 +43,12 @@ function verifyLoginData(loginData) {
 		return
 	}
 	if(isAdmin) {
+        delete account.password;
 		localStorage.setItem("user", JSON.stringify(account));
 		window.location.href = "admin_dashboard.html"
 		return
 	}
+    delete account.password;
 	localStorage.setItem("user", JSON.stringify(account));
 	window.location.href = "home.html";
 }
