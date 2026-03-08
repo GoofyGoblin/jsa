@@ -32,7 +32,7 @@ async function getDotfilesData() {
         result = await response.json();
         renderTodos(result);
     } catch (error) {
-        //console.log(error.message);
+        console.log(error.message);
     }
 }
 getDotfilesData();

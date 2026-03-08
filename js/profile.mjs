@@ -1,4 +1,3 @@
-// fetching the json api
 const dotfilesUrl = "http://localhost:3030/dotfiles";
 const accountsUrl = "http://localhost:3000/accounts";
 const usersUsername = document.getElementById('user-username');
