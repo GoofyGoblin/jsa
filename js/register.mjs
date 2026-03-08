@@ -1,3 +1,4 @@
+import { toggleBookmark } from "./bookmarks.mjs";
 const accountURL = "http://localhost:3000/accounts";
 
 const usernameInput = document.querySelector("#username");
