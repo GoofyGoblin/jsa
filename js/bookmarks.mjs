@@ -2,18 +2,19 @@ const tableBody = document.querySelector("#table-body");
 window.deleteBookmark = deleteBookmark;
 
 export async function toggleBookmark(id, user_id) {
-    const res = await fetch(`http://localhost:3060/bookmarks?id=${id}&user_id=${user_id}`);
-    const existing = await res.json();
+    const res = await fetch(`http://localhost:3060/bookmarks`);
+    const data = await res.json();
+    console.log(id, user_id);
+    console.log(data);
+    const existing = data.filter((e) => {return e.user_id === user_id;});
+    console.log(existing);
+    const object = { "id":`${id}`, "user_id":`${user_id}` };
 
-    if (existing.length > 0) {
-        await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
-    } else {
-        await fetch('http://localhost:3060/bookmarks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "id": `${id}`, "user_id": `${user_id}` })
-        });
-    }
+    await fetch('http://localhost:3060/bookmarks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(object)
+    });
 }
 
 async function getBookmarksData() {
@@ -44,7 +45,6 @@ async function getUserData() {
 
 function filterDotfilesData(bookmarksData, dotfilesData) {
     const bookmarksId = bookmarksData.map((e) => { return e.id; });
-    console.log(bookmarksId);
     let filteredData = [];
     let id;
     for (id of bookmarksId) {
@@ -80,7 +80,6 @@ async function renderBookmarks() {
     }
     let list = filteredDotfilesData.map((bookmarks) => {
         const username = getUsername(userData, bookmarks.user_id)
-        // const username = "fish"
         return `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
                         <td class="px-4 py-4 text-sm font-medium mono-text text-primary">${bookmarks.name}</td>
