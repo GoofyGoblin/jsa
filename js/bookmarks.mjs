@@ -1,13 +1,11 @@
 const tableBody = document.querySelector("#table-body");
 window.deleteBookmark = deleteBookmark;
 
-export async function toggleBookmark(user_id, id) {
+export async function toggleBookmark(id, user_id) {
     const res = await fetch(`http://localhost:3060/bookmarks?id=${id}&user_id=${user_id}`);
     const existing = await res.json();
-    /* console.log(existing); */
 
     if (existing.length > 0) {
-        /* console.log(`bookmark id: ${existing[0].id}, bookmark user_id: ${existing[0].user_id}`); */
         await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
     } else {
         await fetch('http://localhost:3060/bookmarks', {
@@ -36,10 +34,6 @@ async function getDotfilesData() {
 }
 
 async function filterBookmarksData(data, user_id) {
-    /*
-    data = await getBookmarksData();
-    user_id = getCurrentUserId();
-    */
     return (data.filter((e) => e.user_id === user_id));
 }
 
@@ -50,6 +44,7 @@ async function getUserData() {
 
 function filterDotfilesData(bookmarksData, dotfilesData) {
     const bookmarksId = bookmarksData.map((e) => { return e.id; });
+    console.log(bookmarksId);
     let filteredData = [];
     let id;
     for (id of bookmarksId) {
@@ -65,14 +60,19 @@ function getUsername(data, user_id) {
 
 async function renderBookmarks() {
     const data = await getBookmarksData();
-    // const user_id = getCurrentUserId();
-    const user_id = "1";
+
+    const user_id = getCurrentUserId();
+
     const userData = await getUserData();
+
     const dotfilesData = await getDotfilesData();
+
     const bookmarksData = await filterBookmarksData(data, user_id);
+
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
-    console.log(filteredDotfilesData);
+
     tableBody.innerHTML = "";
+
     if (bookmarksData.length == 0) {
         tableComponent.classList.add("hidden")
         noBookmarks.classList.remove("hidden")
@@ -94,8 +94,6 @@ async function renderBookmarks() {
                         </td>
         `;
     })
-    // let bruh = filteredData.forEach((e) => {return e});
-    // console.log(bruh);
     list.forEach((e) => {
         tableBody.innerHTML += e;
     })
