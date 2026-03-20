@@ -1,43 +1,18 @@
 {
   "bookmarks": [
     {
-      "id": "5",
-      "user_id": "2"
-    },
-    {
-      "id": "2",
-      "user_id": "2"
-    },
-    {
-      "id": "4",
-      "user_id": "2"
-    },
-    {
-      "id": "1",
+      "id": "685",
+      "dotfiles_id": "5",
       "user_id": "3"
     },
     {
-      "id": "2",
+      "id": "57",
+      "dotfiles_id": "2",
       "user_id": "3"
     },
     {
-      "id": "4",
-      "user_id": "3"
-    },
-    {
-      "id": "1",
-      "user_id": "3"
-    },
-    {
-      "id": "4",
-      "user_id": "3"
-    },
-    {
-      "id": "4",
-      "user_id": "3"
-    },
-    {
-      "id": "4",
+      "id": "555",
+      "dotfiles_id": "4",
       "user_id": "3"
     }
   ]

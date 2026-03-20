@@ -1,14 +1,20 @@
 const tableBody = document.querySelector("#table-body");
 window.deleteBookmark = deleteBookmark;
 
-export async function toggleBookmark(id, user_id) {
+export async function toggleBookmark(id, userId) {
     const res = await fetch(`http://localhost:3060/bookmarks`);
     const data = await res.json();
-    console.log(id, user_id);
-    console.log(data);
-    const existing = data.filter((e) => {return e.user_id === user_id;});
+    const existing = data.filter((e) => { return e.user_id == userId; });
     console.log(existing);
-    const object = { "id":`${id}`, "user_id":`${user_id}` };
+    const currentId = data.length + 1;
+    const object = {
+        "dotfiles_id": `${id}`,
+        "user_id": `${userId}`, 
+        "id": `${currentId}`
+    };
+    if (existing.length > 0) {
+        await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
+    }
 
     await fetch('http://localhost:3060/bookmarks', {
         method: 'POST',
@@ -44,11 +50,11 @@ async function getUserData() {
 }
 
 function filterDotfilesData(bookmarksData, dotfilesData) {
-    const bookmarksId = bookmarksData.map((e) => { return e.id; });
+    const bookmarksId = bookmarksData.map((e) => { return e.dotfiles_id; });
     let filteredData = [];
     let id;
     for (id of bookmarksId) {
-        filteredData.push(dotfilesData.filter((e) => {return e.id === id}));
+        filteredData.push(dotfilesData.filter((e) => { return e.id === id }));
     }
     return filteredData.flat();
 }
@@ -61,13 +67,13 @@ function getUsername(data, user_id) {
 async function renderBookmarks() {
     const data = await getBookmarksData();
 
-    const user_id = getCurrentUserId();
+    const userId = getCurrentUserId();
 
     const userData = await getUserData();
 
     const dotfilesData = await getDotfilesData();
 
-    const bookmarksData = await filterBookmarksData(data, user_id);
+    const bookmarksData = await filterBookmarksData(data, userId);
 
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
 
@@ -78,6 +84,9 @@ async function renderBookmarks() {
         noBookmarks.classList.remove("hidden")
         return;
     }
+    const bookmarksIds = bookmarksData.map((e) => { return e.id;});
+    console.log(bookmarksIds);
+    console.log(bookmarksData);
     let list = filteredDotfilesData.map((bookmarks) => {
         const username = getUsername(userData, bookmarks.user_id)
         return `
@@ -100,6 +109,7 @@ async function renderBookmarks() {
 renderBookmarks();
 
 async function deleteBookmark(id) {
+    console.log(id);
     await fetch(`http://localhost:3060/bookmarks/${id}`, { method: 'DELETE' });
 }
 
