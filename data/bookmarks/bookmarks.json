@@ -1,24 +1,54 @@
 {
   "bookmarks": [
     {
-      "id": "923",
-      "dotfiles_id": "1",
+      "id": "782",
+      "dotfiles_id": "4",
       "user_id": "3"
     },
     {
-      "id": "127",
-      "dotfiles_id": "1",
-      "user_id": "2"
-    },
-    {
-      "id": "836",
+      "id": "916",
       "dotfiles_id": "2",
       "user_id": "3"
     },
     {
-      "id": "517",
+      "id": "94",
       "dotfiles_id": "5",
       "user_id": "3"
+    },
+    {
+      "id": "565",
+      "dotfiles_id": "3",
+      "user_id": "3"
+    },
+    {
+      "id": "856",
+      "dotfiles_id": "1",
+      "user_id": "3"
+    },
+    {
+      "id": "729",
+      "dotfiles_id": "1",
+      "user_id": "2"
+    },
+    {
+      "id": "453",
+      "dotfiles_id": "1",
+      "user_id": "1"
+    },
+    {
+      "id": "473",
+      "dotfiles_id": "5",
+      "user_id": "2"
+    },
+    {
+      "id": "656",
+      "dotfiles_id": "4",
+      "user_id": "2"
+    },
+    {
+      "id": "746",
+      "dotfiles_id": "2",
+      "user_id": "2"
     }
   ]
 }

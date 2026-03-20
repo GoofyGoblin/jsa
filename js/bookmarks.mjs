@@ -4,16 +4,14 @@ window.deleteBookmark = deleteBookmark;
 export async function toggleBookmark(dotfilesId, userId) {
     const res = await fetch(`http://localhost:3060/bookmarks`);
     const data = await res.json();
-    const existing = data.filter((e) => { return e.dotfiles_id == dotfilesId; });
-    const currentUserId = getCurrentUserId();
+    const existing = data.filter((e) => { return e.dotfiles_id == dotfilesId && e.user_id == userId; });
     const currentId = randomNumberGenerator();
     const object = {
         "dotfiles_id": `${dotfilesId}`,
         "user_id": `${userId}`,
         "id": `${currentId}`
     };
-    const condition = bookmarkCondition(existing, currentUserId);
-    if (condition == true) {
+    if (existing.length > 0) {
         await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
     }
     await fetch('http://localhost:3060/bookmarks', {
@@ -23,14 +21,6 @@ export async function toggleBookmark(dotfilesId, userId) {
     });
 }
 
-function bookmarkCondition(existing, currentUserId) {
-    if (existing.user_id == currentUserId) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
 
 function randomNumberGenerator() {
     const min = 1;
