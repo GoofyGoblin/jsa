@@ -1,18 +1,23 @@
 {
   "bookmarks": [
     {
-      "id": "685",
-      "dotfiles_id": "5",
+      "id": "923",
+      "dotfiles_id": "1",
       "user_id": "3"
     },
     {
-      "id": "57",
+      "id": "127",
+      "dotfiles_id": "1",
+      "user_id": "2"
+    },
+    {
+      "id": "836",
       "dotfiles_id": "2",
       "user_id": "3"
     },
     {
-      "id": "555",
-      "dotfiles_id": "4",
+      "id": "517",
+      "dotfiles_id": "5",
       "user_id": "3"
     }
   ]

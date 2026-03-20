@@ -1,26 +1,41 @@
 const tableBody = document.querySelector("#table-body");
 window.deleteBookmark = deleteBookmark;
 
-export async function toggleBookmark(id, userId) {
+export async function toggleBookmark(dotfilesId, userId) {
     const res = await fetch(`http://localhost:3060/bookmarks`);
     const data = await res.json();
-    const existing = data.filter((e) => { return e.user_id == userId; });
-    console.log(existing);
-    const currentId = data.length + 1;
+    const existing = data.filter((e) => { return e.dotfiles_id == dotfilesId; });
+    const currentUserId = getCurrentUserId();
+    const currentId = randomNumberGenerator();
     const object = {
-        "dotfiles_id": `${id}`,
-        "user_id": `${userId}`, 
+        "dotfiles_id": `${dotfilesId}`,
+        "user_id": `${userId}`,
         "id": `${currentId}`
     };
-    if (existing.length > 0) {
+    const condition = bookmarkCondition(existing, currentUserId);
+    if (condition == true) {
         await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
     }
-
     await fetch('http://localhost:3060/bookmarks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(object)
     });
+}
+
+function bookmarkCondition(existing, currentUserId) {
+    if (existing.user_id == currentUserId) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function randomNumberGenerator() {
+    const min = 1;
+    const max = 999;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 async function getBookmarksData() {
@@ -50,13 +65,10 @@ async function getUserData() {
 }
 
 function filterDotfilesData(bookmarksData, dotfilesData) {
-    const bookmarksId = bookmarksData.map((e) => { return e.dotfiles_id; });
-    let filteredData = [];
-    let id;
-    for (id of bookmarksId) {
-        filteredData.push(dotfilesData.filter((e) => { return e.id === id }));
-    }
-    return filteredData.flat();
+    return bookmarksData.map(bookmark => {
+        const dotfile = dotfilesData.find(d => d.id === bookmark.dotfiles_id);
+        return { ...dotfile, bookmark_id: bookmark.id }
+    })
 }
 
 function getUsername(data, user_id) {
@@ -76,6 +88,7 @@ async function renderBookmarks() {
     const bookmarksData = await filterBookmarksData(data, userId);
 
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
+    console.log(filteredDotfilesData);
 
     tableBody.innerHTML = "";
 
@@ -84,11 +97,11 @@ async function renderBookmarks() {
         noBookmarks.classList.remove("hidden")
         return;
     }
-    const bookmarksIds = bookmarksData.map((e) => { return e.id;});
-    console.log(bookmarksIds);
-    console.log(bookmarksData);
+    console.log(filteredDotfilesData);
+
     let list = filteredDotfilesData.map((bookmarks) => {
         const username = getUsername(userData, bookmarks.user_id)
+        const bId = bookmarks.bookmark_id;
         return `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
                         <td class="px-4 py-4 text-sm font-medium mono-text text-primary">${bookmarks.name}</td>
@@ -96,7 +109,7 @@ async function renderBookmarks() {
                         <td class="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 italic">${bookmarks.description}</td>
                         <td class="px-4 py-4 text-sm text-right font-bold text-green-500">${bookmarks.score}</td>
                         <td class="px-4 py-4 text-sm text-center">
-                            <button class="text-red-500 hover:text-red-600 transition-colors" onclick="deleteBookmark('${bookmarks.id}')">
+                            <button class="text-red-500 hover:text-red-600 transition-colors" onclick="deleteBookmark('${bId}')">
                                 <span class="material-symbols-outlined text-sm">delete</span>
                             </button>
                         </td>
