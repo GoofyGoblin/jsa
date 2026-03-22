@@ -1,105 +1,108 @@
 import { fetchGithubData } from "./submit.mjs";
-import { repoUrl } from "./submit.mjs";
 
-repoUrl = new URL(repoUrl);
+
+const repoUrl = new URL(document.getElementById("repo-url").value);
 
 async function selectNvimPath(json) {
-	const data = await json;
-	return data.filter((element) => element.name == "nvim");
+    const data = await json;
+    return data.filter((element) => element.name == "nvim");
 }
 
 function parseRepoObj(repoObj) {
-	const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
-	return { user, repo, path: repoObj[0].path };
+    const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
+    if (repoObj.length <= 0) {
+        return { user, repo };
+    }
+    return { user, repo, path: repoObj[0].path };
 }
 
 async function fetchNvimConfigRepo(user, repo, path) {
-	const initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
-	const allUrls = await getAllFileUrls(initialUrl);
-	return allUrls;
+    const initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+    const allUrls = await getAllFileUrls(initialUrl);
+    return allUrls;
 }
 
 async function getAllFileUrls(url) {
-	const res = await fetchGithubData(url);
-	if (!res.ok) return [];
-	const data = await res.json();
+    const res = await fetchGithubData(url);
+    if (!res.ok) return [];
+    const data = await res.json();
 
-	let urls = [];
+    let urls = [];
 
-	const files = data.filter(item => item.download_url != null);
-	urls.push(...files.map(f => f.url));
+    const files = data.filter(item => item.download_url != null);
+    urls.push(...files.map(f => f.url));
 
-	const dirs = data.filter(item => item.download_url == null);
-	const dirPromises = dirs.map(dir => getAllFileUrls(dir.url));
-	const nestedUrls = await Promise.all(dirPromises);
+    const dirs = data.filter(item => item.download_url == null);
+    const dirPromises = dirs.map(dir => getAllFileUrls(dir.url));
+    const nestedUrls = await Promise.all(dirPromises);
 
-	nestedUrls.forEach(nested => urls.push(...nested));
+    nestedUrls.forEach(nested => urls.push(...nested));
 
-	return urls;
+    return urls;
 }
 
 async function fetchFilesContents(urls) {
-	const fileContents = [];
-	for (const url of urls) {
-		const res = await fetchGithubData(url);
-		const data = await res.json();
-		fileContents.push(atob(data.content));
-	}
-	return fileContents;
+    const fileContents = [];
+    for (const url of urls) {
+        const res = await fetchGithubData(url);
+        const data = await res.json();
+        fileContents.push(atob(data.content));
+    }
+    return fileContents;
 }
 
 function lineCounter(filesArray) {
-	let loc = 0;
-	for (const fileContent of filesArray) {
-		loc += fileContent.split("\n").length;
-	}
-	return loc;
+    let loc = 0;
+    for (const fileContent of filesArray) {
+        loc += fileContent.split("\n").length;
+    }
+    return loc;
 }
 
 function pluginsCounter(filesArray) {
-	const foundPlugins = new Set();
-	const combinedContent = filesArray.join("")
-		.replace(/--.*$/gm, "")
-		.replace(/\/\/.*$/gm, "")
-		.replace(/#.*$/gm, "");
+    const foundPlugins = new Set();
+    const combinedContent = filesArray.join("")
+        .replace(/--.*$/gm, "")
+        .replace(/\/\/.*$/gm, "")
+        .replace(/#.*$/gm, "");
 
-	const regex = /["'`]?\b([\w.-]+\/[\w.-]+)\b["'`]?/g;
+    const regex = /["'`]?\b([\w.-]+\/[\w.-]+)\b["'`]?/g;
 
-	let match;
-	while ((match = regex.exec(combinedContent)) !== null) {
-		foundPlugins.add(match[1]);
-	}
-	return foundPlugins.size;
+    let match;
+    while ((match = regex.exec(combinedContent)) !== null) {
+        foundPlugins.add(match[1]);
+    }
+    return foundPlugins.size;
 }
 
 function calcScore(loc, plugins) {
-	let score = 100;
-	score -= plugins * 2;
-	score -= loc * 0.05;
-	return score;
+    let score = 100;
+    score -= plugins * 2;
+    score -= loc * 0.05;
+    return score;
 }
 
 export async function nvimOutputProcessor(json) {
-	const nvimData = await selectNvimPath(json);
+    const nvimData = await selectNvimPath(json);
 
-	if (!nvimData) {
-		return { score: 0 };
-	}
+    if (!nvimData) {
+        return { score: 0 };
+    }
 
     console.log(nvimData);
 
-	const { user, repo, path } = parseRepoObj(nvimData);
+    const { user, repo, path } = parseRepoObj(nvimData);
     console.log(user, repo, path);
 
-	const urls = await fetchNvimConfigRepo(user, repo, path);
+    const urls = await fetchNvimConfigRepo(user, repo, path);
 
-	const filesArray = await fetchFilesContents(urls);
+    const filesArray = await fetchFilesContents(urls);
 
-	const loc = lineCounter(filesArray);
+    const loc = lineCounter(filesArray);
 
-	const plugins = pluginsCounter(filesArray);
+    const plugins = pluginsCounter(filesArray);
 
-	const score = calcScore(loc, plugins);
+    const score = calcScore(loc, plugins);
 
-	return score;
+    return score;
 }

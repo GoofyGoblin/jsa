@@ -6,7 +6,7 @@ let userChoice = userOption.value;
 let dotfilesScore;
 let max = 0;
 const description = document.getElementById("description").value;
-export const repoUrl = document.getElementById("repo-url").value;
+const repoUrl = document.getElementById("repo-url").value;
 
 function getCurrentUserId() {
     let currentUserId;
@@ -138,9 +138,9 @@ async function pushDotfilesData(obj) {
             return res.json();
         })
         .then(data => {
-            //console.log("Success: ", data);
+            console.log("Success: ", data);
         })
         .catch(error => {
-            //console.log("Error: ", error);
+            console.log("Error: ", error);
         })
 }

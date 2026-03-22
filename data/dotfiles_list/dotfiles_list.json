@@ -39,6 +39,22 @@
       "repo_url": "https://github.com/SylvanFranklin/.config",
       "description": "",
       "score": "59.8"
+    },
+    {
+      "id": "6",
+      "user_id": "3",
+      "name": "nvim",
+      "repo_url": "https://github.com/ThePrimeagen/init.lua/tree/249f3b14cc517202c80c6babd0f9ec548351ec71",
+      "description": "primeagen config",
+      "score": "100"
+    },
+    {
+      "id": "7",
+      "user_id": "3",
+      "name": "nvim",
+      "repo_url": "https://github.com/nvim-mini/MiniMax",
+      "description": "minimax config",
+      "score": "100"
     }
   ]
 }
