@@ -1,4 +1,6 @@
 import { fetchGithubData } from "./submit.mjs";
+const repoUrl = new URL(document.getElementById("repo-url").value);
+
 async function selectDwmUrlPath(json) {
     const data = await json;
     if (data.find((e) => e.contents_url) != false) {
@@ -8,8 +10,10 @@ async function selectDwmUrlPath(json) {
 }
 
 function parseRepoObj(repoObj) {
-    const url = new Url(repoObj.html_url);
-    const [user, repo] = url.pathname.split("/").filter(Boolean);
+    const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
+    if (repoObj.length <= 0) {
+        return { user, repo };
+    }
     return { user, repo, path: repoObj.path };
 }
 
