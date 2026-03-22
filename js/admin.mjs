@@ -162,7 +162,7 @@ function pushBtnClicked() {
             "description": `${getAddedSoftwareDesc.value}`,
             "score": `${getAddedSoftwareScore.value} / 100`
         }
-        //console.log(newUserObj);
+        console.log(newUserObj);
         sendNewEditMenu(newUserObj);
     })
 }

@@ -6,7 +6,7 @@ let userChoice = userOption.value;
 let dotfilesScore;
 let max = 0;
 const description = document.getElementById("description").value;
-const repo_url = document.getElementById("repo-url").value;
+export const repoUrl = document.getElementById("repo-url").value;
 
 function getCurrentUserId() {
     let currentUserId;
@@ -51,11 +51,10 @@ function checkIfLoggedIn() {
 
 
 function getGithubUrl() {
-    if (document.getElementById("repo-url").value === "") {
+    if (repoUrl === "") {
         alert("Please enter a repo URL");
     }
-    //console.log(document.getElementById("repo-url").value);
-    parseGithubUrl(document.getElementById("repo-url").value);
+    parseGithubUrl(repoUrl);
 }
 
 function parseGithubUrl(url) {
@@ -76,7 +75,7 @@ export async function fetchGithubData(url) {
         });
         return res;
     } catch (e) {
-        //console.log(e);
+        console.log(e);
     }
 }
 
@@ -100,7 +99,7 @@ async function createNewDotfileData(score) {
         "id": `${currentDotfilesId + 1}`,
         "user_id": `${currentUserId}`,
         "name": `${userChoice}`,
-        "repo_url": `${repo_url}`,
+        "repo_url": `${repoUrl}`,
         "description": `${description}`,
         "score": `${score}`,
     }
@@ -111,7 +110,7 @@ async function checkForRepeatSubmission(repo_data) {
     let check = true;
     const res = await fetch('http://localhost:3030/dotfiles');
     const data = JSON.parse(await res.text());
-    //console.log(data);
+    console.log(data);
     data.forEach((e) => {
         if (e.repo_url === repo_data.repo_url) {
             check = false;

@@ -1,16 +1,16 @@
 import { fetchGithubData } from "./submit.mjs";
+import { repoUrl } from "./submit.mjs";
+
+repoUrl = new URL(repoUrl);
 
 async function selectNvimPath(json) {
 	const data = await json;
-	return data.find((element) => element.name === "nvim");
+	return data.filter((element) => element.name == "nvim");
 }
 
 function parseRepoObj(repoObj) {
-    //console.log(repoObj);
-	const url = new URL(repoObj.html_url);
-	const [user, repo] = url.pathname.split("/").filter(Boolean);
-    //console.log(user, repo, repoObj.path);
-	return { user, repo, path: repoObj.path };
+	const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
+	return { user, repo, path: repoObj[0].path };
 }
 
 async function fetchNvimConfigRepo(user, repo, path) {
@@ -86,7 +86,10 @@ export async function nvimOutputProcessor(json) {
 		return { score: 0 };
 	}
 
+    console.log(nvimData);
+
 	const { user, repo, path } = parseRepoObj(nvimData);
+    console.log(user, repo, path);
 
 	const urls = await fetchNvimConfigRepo(user, repo, path);
 

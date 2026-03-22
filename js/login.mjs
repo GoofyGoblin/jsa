@@ -14,7 +14,7 @@ async function getUserData() {
 				verifyLoginData(data);
 			})
 	} catch (error) {
-		//console.log(error.message);
+		console.log(error.message);
 	}
 }
 
@@ -33,7 +33,7 @@ function verifyLoginData(loginData) {
 	let account = accounts.find(account => account.username === username.value)
 	const isAdmin = accounts.find(()=> username.value === "admin");
 	// console.log(account);
-	//console.log(isAdmin);
+	console.log(isAdmin);
 	if (!username.value || !password.value) {
 		alert("Please fill in all fields")
 		return

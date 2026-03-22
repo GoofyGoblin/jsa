@@ -27,7 +27,7 @@ getDotfilesData();
 async function createEntries(result, inputValue) {
 	let topEntry;
 	let fullEntry;
-	//console.log(inputValue);
+	console.log(inputValue);
 	let data = await getDotfilesData();
     data = data.sort((a, b) => b.score - a.score);
     topEntry = data.splice(0, 3);
