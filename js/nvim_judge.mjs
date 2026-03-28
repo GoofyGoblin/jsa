@@ -1,7 +1,7 @@
 import { fetchGithubData } from "./submit.mjs";
 
+const repoUrl = document.getElementById("repo-url");
 
-const repoUrl = new URL(document.getElementById("repo-url").value);
 
 async function selectNvimPath(json) {
     const data = await json;
@@ -9,7 +9,8 @@ async function selectNvimPath(json) {
 }
 
 function parseRepoObj(repoObj) {
-    const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
+    const url = new URL(repoUrl.value);
+    const [user, repo] = url.pathname.split("/").filter(Boolean);
     if (repoObj.length <= 0) {
         return { user, repo };
     }
@@ -17,7 +18,12 @@ function parseRepoObj(repoObj) {
 }
 
 async function fetchNvimConfigRepo(user, repo, path) {
-    const initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+    let initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+
+    /* if the config files is not in another folder in the repo */
+    if (!path) {
+        initialUrl = `https://api.github.com/repos/${user}/${repo}/contents`
+    }
     const allUrls = await getAllFileUrls(initialUrl);
     return allUrls;
 }
@@ -79,20 +85,16 @@ function calcScore(loc, plugins) {
     let score = 100;
     score -= plugins * 2;
     score -= loc * 0.05;
-    return score;
+    if (score < 0) {
+        score = 0;
+    }
+    return Math.round(score);
 }
 
 export async function nvimOutputProcessor(json) {
     const nvimData = await selectNvimPath(json);
 
-    if (!nvimData) {
-        return { score: 0 };
-    }
-
-    console.log(nvimData);
-
     const { user, repo, path } = parseRepoObj(nvimData);
-    console.log(user, repo, path);
 
     const urls = await fetchNvimConfigRepo(user, repo, path);
 

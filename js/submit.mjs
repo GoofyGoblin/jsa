@@ -2,11 +2,11 @@ import { nvimOutputProcessor } from "./nvim_judge.mjs";
 import { dwmOutputProcessor } from "./dwm_judge.mjs";
 const token = "token"
 const userOption = document.getElementById("select");
-let userChoice = userOption.value;
+const submitButton = document.getElementById("submit-btn");
 let dotfilesScore;
-let max = 0;
-const description = document.getElementById("description").value;
-const repoUrl = document.getElementById("repo-url").value;
+const userDescription = document.getElementById("description");
+
+const repoUrl = document.getElementById("repo-url");
 
 function getCurrentUserId() {
     let currentUserId;
@@ -21,22 +21,20 @@ async function getDotfilesId() {
     return data.length;
 }
 
-function getUserChoice() {
-    userOption.addEventListener("change", (e) => {
-        userChoice = e.target.value;
-    })
-}
+/*executes command n call functions whenever user clicks the submit button*/
 
 function getSubmitButton() {
-    document.getElementById("submit-btn").addEventListener("click", (e) => {
+    submitButton.addEventListener("click", (e) => {
         e.preventDefault();
-        const checkLoggedIn = checkIfLoggedIn();
+
+        const checkLoggedIn = checkIfLoggedIn(); // fucking self explanatory
         if (!checkLoggedIn) {
             alert("Please create an account before submitting")
             return;
         }
+
+        // calls the functions
         getGithubUrl();
-        getUserChoice();
     })
 }
 getSubmitButton();
@@ -51,10 +49,10 @@ function checkIfLoggedIn() {
 
 
 function getGithubUrl() {
-    if (repoUrl === "") {
+    if (repoUrl.value === "") {
         alert("Please enter a repo URL");
     }
-    parseGithubUrl(repoUrl);
+    parseGithubUrl(repoUrl.value);
 }
 
 function parseGithubUrl(url) {
@@ -62,6 +60,9 @@ function parseGithubUrl(url) {
     const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
     fetchRepoContents(user, repo);
 }
+
+
+/* data fetching function to be used in judge files */
 
 export async function fetchGithubData(url) {
     try {
@@ -80,13 +81,13 @@ export async function fetchGithubData(url) {
 }
 
 async function fetchRepoContents(user, repo) {
-    const res = await fetchGithubData(`https://api.github.com/repos/${user}/${repo}/contents/`);
+    const res = await fetchGithubData(`https://api.github.com/repos/${user}/${repo}/contents`);
     if (!res.ok) {
         throw new Error("Repo not found")
     }
-    if (userChoice === "nvim") {
+    if (userOption.value === "nvim") {
         dotfilesScore = await nvimOutputProcessor(res.json());
-    } else if (userChoice === "dwm") {
+    } else if (userOption.value === "dwm") {
         dotfilesScore = await dwmOutputProcessor(res.json());
     }
     createNewDotfileData(dotfilesScore);
@@ -98,9 +99,9 @@ async function createNewDotfileData(score) {
     const newDotfileData = {
         "id": `${currentDotfilesId + 1}`,
         "user_id": `${currentUserId}`,
-        "name": `${userChoice}`,
-        "repo_url": `${repoUrl}`,
-        "description": `${description}`,
+        "name": `${userOption.value}`,
+        "repo_url": `${repoUrl.value}`,
+        "description": `${userDescription.value}`,
         "score": `${score}`,
     }
     checkForRepeatSubmission(newDotfileData);

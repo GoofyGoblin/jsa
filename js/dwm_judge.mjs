@@ -1,24 +1,27 @@
 import { fetchGithubData } from "./submit.mjs";
-const repoUrl = new URL(document.getElementById("repo-url").value);
+
+const repoUrl = document.getElementById("repo-url");
 
 async function selectDwmUrlPath(json) {
     const data = await json;
-    if (data.find((e) => e.contents_url) != false) {
-        return [0, data];
-    }
-    return data.find((e) => e.name === "dwm");
+    return data.filter((e) => e.name == "dwm");
 }
 
 function parseRepoObj(repoObj) {
-    const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
+    const url = new URL(repoUrl.value);
+    const [user, repo] = url.pathname.split("/").filter(Boolean);
     if (repoObj.length <= 0) {
         return { user, repo };
     }
-    return { user, repo, path: repoObj.path };
+    return { user, repo, path: repoObj[0].path };
 }
 
 async function fetchDwmConfigRepo(user, repo, path) {
-    const initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+    let initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+
+    if (!path) {
+        initialUrl = `https://api.github.com/repos/${user}/${repo}/contents`
+    }
     const allUrls = await getAllFileUrls(initialUrl);
     return allUrls;
 }
@@ -71,27 +74,21 @@ function calcScore(loc) {
     if (loc >= 6000) {
         score = 0;
     }
-    return score;
+    return Math.round(score);
 }
 
 export async function dwmOutputProcessor(json) {
     const dwmData = await selectDwmUrlPath(json);
-    if (!dwmData) {
-        return { score: 0 };
-    } else if (dwmData[0] === 0) {
-        const urls = dwmData[1].map((e) => e.git_url);
-        const filesArray = await fetchFilesContents(urls);
-        const loc = lineCounter(filesArray);
-        const score = calcScore(loc);
-        console.log(score);
-        return score;
-    } else {
-        const { user, repo, path } = parseRepoObj(dwmData);
-        const urls = await fetchDwmConfigRepo(user, repo, path);
-        const filesArray = await fetchFilesContents(urls);
-        const loc = lineCounter(filesArray);
-        const score = calcScore(loc);
-        console.log(score);
-        return score;
-    }
+
+    const { user, repo, path } = parseRepoObj(dwmData);
+
+    const urls = await fetchDwmConfigRepo(user, repo, path);
+
+    const filesArray = await fetchFilesContents(urls);
+
+    const loc = lineCounter(filesArray);
+
+    const score = calcScore(loc);
+
+    return score;
 }
