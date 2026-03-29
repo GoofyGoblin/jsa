@@ -31,14 +31,6 @@
       "repo_url": "https://github.com/GoofyGoblin/suckless_stuff",
       "description": "my config",
       "score": "100"
-    },
-    {
-      "id": "5",
-      "user_id": "9",
-      "name": "dwm",
-      "repo_url": "https://github.com/BreadOnPenguins/dwm",
-      "description": "breads dwm",
-      "score": "5"
     }
   ]
 }

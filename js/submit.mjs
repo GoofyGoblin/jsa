@@ -32,12 +32,12 @@ function getSubmitButton() {
             alert("Please create an account before submitting")
             return;
         }
-
-        // calls the functions
+        alert('Your dotfiles is being processed please do not press upload again');
         getGithubUrl();
     })
 }
 getSubmitButton();
+
 
 function checkIfLoggedIn() {
     const user = localStorage.getItem('user');

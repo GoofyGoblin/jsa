@@ -69,6 +69,14 @@
       "email": "asb@mail.com",
       "password": "123",
       "role": "user"
+    },
+    {
+      "id": "dd5a",
+      "user_id": "10",
+      "username": "weirdestbozo",
+      "email": "weirdestbozo@mail.com",
+      "password": "123",
+      "role": "user"
     }
   ]
 }
