@@ -58,7 +58,7 @@ createEntries([], []);
  */
 
 function getUsername(data, user_id) {
-	const user = data.find((e) => e.user_id === user_id);
+	const user = data.find((e) => e.user_id == user_id);
 	return user.username;
 }
 
@@ -76,20 +76,27 @@ function getCurrentUserId() {
 
 async function renderDotfiles(topResults, fullResults) {
 	let result;
+
 	const userData = await getUserData();
 	const url = window.location.href;
     const urlArray = url.split("");
     const userId = getCurrentUserId();
-	if (urlArray.find((e) => e === "f") === "f") {
+
+    console.log(fullResults);
+
+	if (urlArray.find((e) => e == "f") == "f") {
 		result = fullResults;
 	} else {
 		result = topResults;
 	}
+
 	result.sort((a, b) => b.score - a.score);
+
     let rank = 0;
 	let list = result.map((dotfiles) => {
         ++rank;
         const username = getUsername(userData, dotfiles.user_id);
+        console.log(dotfiles);
 		return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
 							<td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${rank}</td>

@@ -87,6 +87,7 @@ async function renderBookmarks() {
     const dotfilesData = await getDotfilesData();
     const bookmarksData = await filterBookmarksData(data, userId);
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
+
     tableBody.innerHTML = "";
     if (bookmarksData.length == 0) {
         tableComponent.classList.add("hidden")

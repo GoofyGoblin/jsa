@@ -57,10 +57,17 @@
       "id": "46a5"
     },
     {
-      "id": "47",
+      "user_id": "8",
       "username": "user2",
       "email": "user2@mail.com",
       "password": "123456",
+      "role": "user"
+    },
+    {
+      "user_id": "9",
+      "username": "asb",
+      "email": "asb@mail.com",
+      "password": "123",
       "role": "user"
     }
   ]

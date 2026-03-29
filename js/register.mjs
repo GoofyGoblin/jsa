@@ -5,40 +5,25 @@ const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#password");
 const confirmPasswordInput = document.querySelector("#confirm-password");
 const registerBtn = document.querySelector("#register-btn");
+const accounts = await fetchAccounts(accountURL);
 
-/*
-  Gets the existing data
- */
-
-function getValidAccounts(data) {
-    const list = Array.isArray(data) ? data : (data && data.accounts) || [];
-    return list.filter((item) => item && typeof item.username === "string");
+async function fetchAccounts(url) {
+    const res = await fetch(url);
+    const data = JSON.parse(await res.text());
+    return data
 }
-
-/*
-  Get the length of elements in the json file and then adds 1 to the id of the new user
- */
-
-function getNextId(accounts) {
-	    const ids = accounts
-	        .map((a) => (typeof a.id === "string" ? parseInt(a.id, 10) : a.id))
-	        .filter((n) => !isNaN(n));
-	    const max = ids.length ? Math.max(...ids) : 0;
-	    return String(max + 1)
-}
-
 
 /*
   Removes the whitespaces from the user input and then calls the input check function
  */
 
-function getRegisterBtn(registerBtn) {
+function getRegisterBtn() {
     registerBtn.addEventListener("click", (e) => {
         e.preventDefault()
         checkUserInput((usernameInput.value || "").trim(), (emailInput.value || "").trim(), (passwordInput.value || "").trim(), (confirmPasswordInput.value || "").trim())
     })
 }
-getRegisterBtn(registerBtn);
+getRegisterBtn();
 
 function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswordValue) {
     if (!usernameValue || !emailValue || !passwordValue || !confirmPasswordValue) {
@@ -49,61 +34,50 @@ function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswor
         alert("Password does not match");
         return;
     }
-    fetchAccounts(accountURL, usernameValue, emailValue);
+    checkIfAccountExist();
 }
 
-/*
-  Fetch accounts from the json file and then call checkAccountFromUserInput
-  with data gotten from the json file using getValidAccounts
- */
 
-async function fetchAccounts(url, usernameValue, emailValue) {
-    const res = await fetch(url);
-    res.json()
-        .then((data) => {
-            checkAccountFromUserInput(
-				data,
-                getValidAccounts(data).some((a) => a.username === usernameValue),
-                getValidAccounts(data).some((a) => a.email === emailValue)
-            );
-        })
+function getAccountData(data, usernameValue) {
+    return data.find((e) => e.username == usernameValue);
 }
 
-/*
-  If existUser or existEmail is not empty then alerts the user and then return
-  if not then calls createNewAccountObj
- */
+function getNextId() {
+    return accounts.length + 1;
+}
 
-function checkAccountFromUserInput(data, existUser, existEmail) {
-    if (existUser) {
-        alert("Username already exists");
+function checkIfAccountExist() {
+    const username = usernameInput.value.trim();
+    const exist = getAccountData(accounts, username)
+    console.log(exist);
+
+    if(exist) {
+        alert('This user already exist');
         return;
+    } else {
+        createNewAccountObj();
     }
-    if (existEmail) {
-        alert("Email already exists");
-        return;
-    }
-	createNewAccountObj(getNextId(getValidAccounts(data)), (usernameInput.value || "").trim(), (emailInput.value || "").trim(), (passwordInput.value).trim());
 }
 
-/*
-  Creates object and then calls the send function
- */
+function createNewAccountObj() {
+    const usernameValue = usernameInput.value.trim();
+    const emailValue = emailInput.value.trim();
+    const passwordValue = passwordInput.value.trim();
+    const idValue = getNextId();
 
-function createNewAccountObj(idValue, usernameValue, emailValue, passwordValue) {
 	const newAccount = {
-		id: idValue,
-		username: usernameValue,
-		email: emailValue,
-		password: passwordValue,
+		user_id: `${idValue}`,
+		username: `${usernameValue}`,
+		email: `${emailValue}`,
+		password: `${passwordValue}`,
 		role: "user",
 	}
-	sendNewAccount(newAccount);
+    sendNewAccount(newAccount);
 }
 
 /*
   Sends the account, if it fails call fetchUnfullfilledHandler
-  if not calls fetchFullfilledHandler
+  if not call fetchFullfilledHandler
  */
 
 async function sendNewAccount(newAccount) {
