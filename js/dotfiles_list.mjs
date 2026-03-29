@@ -1,9 +1,13 @@
 import { toggleBookmark } from "./bookmarks.mjs";
 
 window.toggleBookmark = toggleBookmark;
-
 const getSearchInput = document.getElementById("leaderboard-search");
 const url = "http://localhost:3030/dotfiles";
+
+/*
+  Just read the function name lmao
+ */
+
 async function getDotfilesData() {
 	try {
 		const response = await fetch(url);
@@ -24,10 +28,16 @@ async function getUserData() {
 }
 getDotfilesData();
 
+/*
+  Create entry
+  Makes the entry for the render function
+  1. If the result gotten is 0 or the input value (from the search section) is none then get the data
+  from the function
+ */
+
 async function createEntries(result, inputValue) {
 	let topEntry;
 	let fullEntry;
-	console.log(inputValue);
 	let data = await getDotfilesData();
     data = data.sort((a, b) => b.score - a.score);
     topEntry = data.splice(0, 3);
@@ -43,6 +53,9 @@ async function createEntries(result, inputValue) {
 }
 createEntries([], []);
 
+/*
+  Pretty much self explanatory here
+ */
 
 function getUsername(data, user_id) {
 	const user = data.find((e) => e.user_id === user_id);
@@ -53,6 +66,13 @@ function getCurrentUserId() {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     return currentUser.user_id;
 }
+
+/*
+  Render thingy
+  1. Gets the data from the previous function (topResults and fullResults)
+  2. Assigns the value of top result or full result accordingly to the leaderboard html (full_leaderboard or leaderboard)
+  3. Renders the thing
+ */
 
 async function renderDotfiles(topResults, fullResults) {
 	let result;
@@ -98,6 +118,14 @@ async function renderDotfiles(topResults, fullResults) {
 
 
 /* Search section */
+
+/*
+  When users type the search query:
+  1. Code will get the input
+  2. Formats the query
+  3. Filter the results
+  4. Calls the create entry function
+ */
 
 function getSearchInputValue() {
 	getSearchInput.addEventListener("input", (e) => {

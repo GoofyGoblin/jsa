@@ -1,9 +1,17 @@
 // fetching the json api
 import { toggleBookmark } from "./bookmarks.mjs";
 
+
+/*
+  Theres a toggle bookmark for bookmark.mjs
+  The code in this file is pretty much self explanatory if you
+  read the name of the functions
+ */
+
 window.toggleBookmark = toggleBookmark;
 
 const url = "http://localhost:3030/dotfiles";
+
 async function getDotfilesData() {
     try {
         const response = await fetch(url);

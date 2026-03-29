@@ -6,10 +6,18 @@ const passwordInput = document.querySelector("#password");
 const confirmPasswordInput = document.querySelector("#confirm-password");
 const registerBtn = document.querySelector("#register-btn");
 
+/*
+  Gets the existing data
+ */
+
 function getValidAccounts(data) {
     const list = Array.isArray(data) ? data : (data && data.accounts) || [];
     return list.filter((item) => item && typeof item.username === "string");
 }
+
+/*
+  Get the length of elements in the json file and then adds 1 to the id of the new user
+ */
 
 function getNextId(accounts) {
 	    const ids = accounts
@@ -19,6 +27,10 @@ function getNextId(accounts) {
 	    return String(max + 1)
 }
 
+
+/*
+  Removes the whitespaces from the user input and then calls the input check function
+ */
 
 function getRegisterBtn(registerBtn) {
     registerBtn.addEventListener("click", (e) => {
@@ -40,6 +52,11 @@ function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswor
     fetchAccounts(accountURL, usernameValue, emailValue);
 }
 
+/*
+  Fetch accounts from the json file and then call checkAccountFromUserInput
+  with data gotten from the json file using getValidAccounts
+ */
+
 async function fetchAccounts(url, usernameValue, emailValue) {
     const res = await fetch(url);
     res.json()
@@ -51,6 +68,11 @@ async function fetchAccounts(url, usernameValue, emailValue) {
             );
         })
 }
+
+/*
+  If existUser or existEmail is not empty then alerts the user and then return
+  if not then calls createNewAccountObj
+ */
 
 function checkAccountFromUserInput(data, existUser, existEmail) {
     if (existUser) {
@@ -64,6 +86,10 @@ function checkAccountFromUserInput(data, existUser, existEmail) {
 	createNewAccountObj(getNextId(getValidAccounts(data)), (usernameInput.value || "").trim(), (emailInput.value || "").trim(), (passwordInput.value).trim());
 }
 
+/*
+  Creates object and then calls the send function
+ */
+
 function createNewAccountObj(idValue, usernameValue, emailValue, passwordValue) {
 	const newAccount = {
 		id: idValue,
@@ -72,9 +98,13 @@ function createNewAccountObj(idValue, usernameValue, emailValue, passwordValue) 
 		password: passwordValue,
 		role: "user",
 	}
-	console.log(newAccount);
 	sendNewAccount(newAccount);
 }
+
+/*
+  Sends the account, if it fails call fetchUnfullfilledHandler
+  if not calls fetchFullfilledHandler
+ */
 
 async function sendNewAccount(newAccount) {
 	const res = await fetch(accountURL, {

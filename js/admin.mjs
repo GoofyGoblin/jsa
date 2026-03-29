@@ -23,6 +23,10 @@ let result;
 
 window.start = start;
 window.confirmDeletion = confirmDeletion;
+
+/*
+  Self explanatory
+ */
 async function getDotfilesData() {
     try {
         const response = await fetch(url);
@@ -30,14 +34,40 @@ async function getDotfilesData() {
             throw new error(`response status ${response.status}`);
         }
         result = await response.json();
-        renderTodos(result);
+        renderDotfiles(result);
     } catch (error) {
         console.log(error.message);
     }
 }
 getDotfilesData();
 
-function renderTodos(results) {
+/*
+  Checks the user from local storage
+  1. If theres none then send the user to login page
+  2. If user is not admin then send them to home page
+ */
+
+function checkUserCredentials() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        alert('Log in please');
+        window.location.href = "login.html";
+        return;
+    }
+    if (user.username != "admin") {
+        alert('Not an admin');
+        window.location.href = "home.html";
+        return;
+    }
+}
+checkUserCredentials();
+
+
+/*
+  Render dotfiles
+ */
+
+function renderDotfiles(results) {
     let list = results.map((dotfiles) => {
         return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
@@ -57,6 +87,10 @@ function renderTodos(results) {
         document.querySelector("#admin-leaderboard-body").innerHTML += e;
     })
 }
+
+/*
+  This function calls the other functions that opens the CRUD ui and checks for the edit button
+ */
 
 function start(id, user_id, repo_url) {
     openEditMenu();
@@ -80,6 +114,7 @@ function closeEditMenu() {
         editMenu.classList.add("hidden");
     })
 }
+
 
 function sendEditMenuBtnHandler() {
     sendEditMenuBtn.addEventListener("click", (e) => {
@@ -109,6 +144,10 @@ function confirmDeletion(id) {
     deleteDotfilesList(id);
 }
 
+/*
+  Functions that gets called when the CRUD ui elements get clicked
+ */
+
 async function sendEditMenu(userObj) {
     const sendEditMenu = await fetch(`http://localhost:3030/dotfiles/${userObj.id}`, {
         method: 'PATCH',
@@ -120,6 +159,11 @@ async function sendEditMenu(userObj) {
         alert("Something went wrong");
     }
 }
+
+/*
+  This function sends the new dotfiles that's created in the CRUD ui
+  it's also not really relevant to the function above
+ */
 
 async function sendNewEditMenu(userObj) {
     const sendNewEditMenu = await fetch("http://localhost:3030/dotfiles", {
@@ -144,6 +188,9 @@ async function deleteDotfilesList(id) {
     }
 }
 
+/*
+  Gets the dotfiles option (nvim or dwm)
+ */
 function getAdminChoice() {
     adminOption.addEventListener("change", (e) => {
         adminOption = e.target.value;
@@ -162,7 +209,6 @@ function pushBtnClicked() {
             "description": `${getAddedSoftwareDesc.value}`,
             "score": `${getAddedSoftwareScore.value} / 100`
         }
-        console.log(newUserObj);
         sendNewEditMenu(newUserObj);
     })
 }

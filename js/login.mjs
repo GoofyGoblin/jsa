@@ -2,6 +2,11 @@
 const username = document.querySelector("#username-btn");
 const password = document.querySelector("#password-btn");
 const loginBtn = document.querySelector("#login-btn");
+
+/*
+  Self explanatory, its in the function name
+ */
+
 async function getUserData() {
 	const url = "http://localhost:3000/accounts";
 	try {
@@ -27,6 +32,14 @@ function getLoginBtn() {
 	}
 }
 getLoginBtn();
+
+/*
+  This function
+  1. Checks if the user is admin or not
+  2. If admin then the user gets sent to the dashboard
+  3. If not then the user gets sent to the home page
+  4. Saves the user credentials to local storage (after deleting the password of course)
+ */
 
 function verifyLoginData(loginData) {
 	const accounts = loginData;

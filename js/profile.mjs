@@ -6,6 +6,10 @@ const usersSubmitCount = document.getElementById('user-submission-count');
 const usersAvgScore = document.getElementById('user-avg-score');
 const tableBody = document.getElementById('user-submissions-list');
 
+/*
+  Self explanatory
+ */
+
 async function getDotfilesData() {
     try {
         const response = await fetch(dotfilesUrl);
@@ -50,6 +54,13 @@ async function getDotfiles(user) {
     const dotfilesData = await getDotfilesData();
     return dotfilesData.filter(d => d.user_id === user.user_id);
 }
+
+/*
+  In this function:
+  1. the default score is N/A
+  2. if the user has uploaded any dotfiles
+  3. caculates the avrage score combined from the uploaded dotfiles's score
+ */
 
 function calcAvgScore(dotfiles) {
     let avgScore = "N/A";

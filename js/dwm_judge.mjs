@@ -1,5 +1,9 @@
 import { fetchGithubData } from "./submit.mjs";
 
+/*
+  Generally the same as nvim_judge but only reads the lines of code
+ */
+
 const repoUrl = document.getElementById("repo-url");
 
 async function selectDwmUrlPath(json) {

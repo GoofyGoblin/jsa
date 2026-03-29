@@ -1,6 +1,13 @@
 const tableBody = document.querySelector("#table-body");
 window.deleteBookmark = deleteBookmark;
 
+/*
+  This function get's called when the user press the star
+  on home, leaderboard and full leaderboard page
+
+  It checks if the bookmarked dotfiles already existed (same dotfiles, bookmarked by the same user)
+  and deletes the existing one then adds it again
+ */
 export async function toggleBookmark(dotfilesId, userId) {
     const res = await fetch(`http://localhost:3060/bookmarks`);
     const data = await res.json();
@@ -21,6 +28,9 @@ export async function toggleBookmark(dotfilesId, userId) {
     });
 }
 
+/*
+  Self explanatory
+ */
 
 function randomNumberGenerator() {
     const min = 1;
@@ -66,21 +76,18 @@ function getUsername(data, user_id) {
     return user.username;
 }
 
+/*
+  This function renders the bookmarked dotfiles according to each user from local storage
+ */
+
 async function renderBookmarks() {
     const data = await getBookmarksData();
-
     const userId = getCurrentUserId();
-
     const userData = await getUserData();
-
     const dotfilesData = await getDotfilesData();
-
     const bookmarksData = await filterBookmarksData(data, userId);
-
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
-
     tableBody.innerHTML = "";
-
     if (bookmarksData.length == 0) {
         tableComponent.classList.add("hidden")
         noBookmarks.classList.remove("hidden")
@@ -112,10 +119,3 @@ renderBookmarks();
 async function deleteBookmark(id) {
     await fetch(`http://localhost:3060/bookmarks/${id}`, { method: 'DELETE' });
 }
-
-/*
-- return stuff
-    <button class="text-red-500 hover:text-red-600 transition-colors" onclick="functionThatDeletes(bookmark)">
-        <span class="material-symbols-outlined text-sm">delete</span>
-    </button>
-*/
