@@ -1,7 +1,5 @@
-import
-{ nvimOutputProcessor } from "./nvim_judge.mjs";
-import
-{ dwmOutputProcessor } from "./dwm_judge.mjs";
+import { nvimOutputProcessor } from "./nvim_judge.mjs";
+import { dwmOutputProcessor } from "./dwm_judge.mjs";
 const token = "token"
 const userOption = document.getElementById("select");
 const submitButton = document.getElementById("submit-btn");

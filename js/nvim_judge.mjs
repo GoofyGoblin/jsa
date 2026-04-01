@@ -1,5 +1,4 @@
-import
-{ fetchGithubData } from "./submit.mjs";
+import { fetchGithubData } from "./submit.mjs";
 
 const repoUrl = document.getElementById("repo-url");
 
@@ -16,11 +15,9 @@ function parseRepoObj(repoObj)
     const [user, repo] = url.pathname.split("/").filter(Boolean);
     if (repoObj.length <= 0)
     {
-        return
-        { user, repo };
+        return { user, repo };
     }
-    return
-    { user, repo, path: repoObj[0].path };
+    return { user, repo, path: repoObj[0].path };
 }
 
 async function fetchNvimConfigRepo(user, repo, path)

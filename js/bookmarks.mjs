@@ -85,8 +85,7 @@ function filterDotfilesData(bookmarksData, dotfilesData)
     return bookmarksData.map(bookmark =>
     {
         const dotfile = dotfilesData.find(d => d.id === bookmark.dotfiles_id);
-        return
-        { ...dotfile, bookmark_id: bookmark.id }
+        return { ...dotfile, bookmark_id: bookmark.id }
     })
 }
 
