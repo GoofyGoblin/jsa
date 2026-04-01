@@ -7,25 +7,33 @@ const loginBtn = document.querySelector("#login-btn");
   Self explanatory, its in the function name
  */
 
-async function getUserData() {
+async function getUserData()
+{
 	const url = "http://localhost:3000/accounts";
-	try {
+	try
+	{
 		const res = await fetch(url);
-		if (!res.ok) {
+		if (!res.ok)
+		{
 			throw new error(`response status ${res.status}`);
 		}
 		res.json()
-			.then((data) => {
+			.then((data) =>
+			{
 				verifyLoginData(data);
 			})
-	} catch (error) {
+	} catch (error)
+	{
 		console.log(error.message);
 	}
 }
 
-function getLoginBtn() {
-	if (loginBtn) {
-		loginBtn.addEventListener("click", (e) => {
+function getLoginBtn()
+{
+	if (loginBtn)
+	{
+		loginBtn.addEventListener("click", (e) =>
+		{
 			e.preventDefault()
 			getUserData();
 		})
@@ -41,21 +49,25 @@ getLoginBtn();
   4. Saves the user credentials to local storage (after deleting the password of course)
  */
 
-function verifyLoginData(loginData) {
+function verifyLoginData(loginData)
+{
 	const accounts = loginData;
 	let account = accounts.find(account => account.username === username.value)
 	const isAdmin = accounts.find(()=> username.value === "admin");
 	// console.log(account);
 	console.log(isAdmin);
-	if (!username.value || !password.value) {
+	if (!username.value || !password.value)
+	{
 		alert("Please fill in all fields")
 		return
 	}
-	if (!account) {
+	if (!account)
+	{
 		alert("Invalid username or password")
 		return
 	}
-	if(isAdmin) {
+	if(isAdmin)
+	{
         delete account.password;
 		localStorage.setItem("user", JSON.stringify(account));
 		window.location.href = "admin_dashboard.html"

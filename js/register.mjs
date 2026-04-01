@@ -7,7 +7,8 @@ const confirmPasswordInput = document.querySelector("#confirm-password");
 const registerBtn = document.querySelector("#register-btn");
 const accounts = await fetchAccounts(accountURL);
 
-async function fetchAccounts(url) {
+async function fetchAccounts(url)
+{
     const res = await fetch(url);
     const data = JSON.parse(await res.text());
     return data
@@ -17,20 +18,25 @@ async function fetchAccounts(url) {
   Removes the whitespaces from the user input and then calls the input check function
  */
 
-function getRegisterBtn() {
-    registerBtn.addEventListener("click", (e) => {
+function getRegisterBtn()
+{
+    registerBtn.addEventListener("click", (e) =>
+    {
         e.preventDefault()
         checkUserInput((usernameInput.value || "").trim(), (emailInput.value || "").trim(), (passwordInput.value || "").trim(), (confirmPasswordInput.value || "").trim())
     })
 }
 getRegisterBtn();
 
-function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswordValue) {
-    if (!usernameValue || !emailValue || !passwordValue || !confirmPasswordValue) {
+function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswordValue)
+{
+    if (!usernameValue || !emailValue || !passwordValue || !confirmPasswordValue)
+    {
         alert("Please fill in all fields");
         return;
     }
-    if (passwordValue !== confirmPasswordValue) {
+    if (passwordValue !== confirmPasswordValue)
+    {
         alert("Password does not match");
         return;
     }
@@ -38,34 +44,41 @@ function checkUserInput(usernameValue, emailValue, passwordValue, confirmPasswor
 }
 
 
-function getAccountData(data, usernameValue) {
+function getAccountData(data, usernameValue)
+{
     return data.find((e) => e.username == usernameValue);
 }
 
-function getNextId() {
+function getNextId()
+{
     return accounts.length + 1;
 }
 
-function checkIfAccountExist() {
+function checkIfAccountExist()
+{
     const username = usernameInput.value.trim();
     const exist = getAccountData(accounts, username)
     console.log(exist);
 
-    if(exist) {
+    if(exist)
+    {
         alert('This user already exist');
         return;
-    } else {
+    } else
+    {
         createNewAccountObj();
     }
 }
 
-function createNewAccountObj() {
+function createNewAccountObj()
+{
     const usernameValue = usernameInput.value.trim();
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
     const idValue = getNextId();
 
-	const newAccount = {
+	const newAccount =
+	{
 		user_id: `${idValue}`,
 		username: `${usernameValue}`,
 		email: `${emailValue}`,
@@ -80,24 +93,30 @@ function createNewAccountObj() {
   if not call fetchFullfilledHandler
  */
 
-async function sendNewAccount(newAccount) {
-	const res = await fetch(accountURL, {
+async function sendNewAccount(newAccount)
+{
+	const res = await fetch(accountURL,
+	{
 		method: "POST",
-		headers: {"Content-type": "application/json"},
+		headers:
+		{"Content-type": "application/json"},
 		body: JSON.stringify(newAccount),
 	})
 	if (!res) return;
-	if (!res.ok) {
+	if (!res.ok)
+	{
 		fetchUnfullfilledHandler();
 		return;
 	}
 	fetchFullfilledHandler();
 }
 
-function fetchFullfilledHandler(){
+function fetchFullfilledHandler()
+{
 	window.location.href = "login.html";
 }
 
-function fetchUnfullfilledHandler(){
+function fetchUnfullfilledHandler()
+{
 	alert("Cant connect to server");
 }

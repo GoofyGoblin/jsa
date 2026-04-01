@@ -1,16 +1,22 @@
-tailwind.config = {
+tailwind.config =
+{
 	darkMode: "class",
-	theme: {
-		extend: {
-			colors: {
+	theme:
+	{
+		extend:
+		{
+			colors:
+			{
 				"primary": "#1152d4",
 				"background-light": "#f6f6f8",
 				"background-dark": "#101622",
 			},
-			fontFamily: {
+			fontFamily:
+			{
 				"display": ["Fira Code", "sans-serif"]
 			},
-			borderRadius: {
+			borderRadius:
+			{
 				"DEFAULT": "0.125rem",
 				"lg": "0.25rem",
 				"xl": "0.5rem",

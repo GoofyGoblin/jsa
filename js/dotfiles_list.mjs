@@ -1,4 +1,5 @@
-import { toggleBookmark } from "./bookmarks.mjs";
+import
+{ toggleBookmark } from "./bookmarks.mjs";
 
 window.toggleBookmark = toggleBookmark;
 const getSearchInput = document.getElementById("leaderboard-search");
@@ -8,20 +9,25 @@ const url = "http://localhost:3030/dotfiles";
   Just read the function name lmao
  */
 
-async function getDotfilesData() {
-	try {
+async function getDotfilesData()
+{
+	try
+	{
 		const response = await fetch(url);
-		if (!response.ok) {
+		if (!response.ok)
+		{
 			throw new error(`response status ${response.status}`);
 		}
 		const result = await response.json();
 		return result;
-	} catch (error) {
+	} catch (error)
+	{
 		console.log(error.message);
 	}
 }
 
-async function getUserData() {
+async function getUserData()
+{
 	const res = await fetch('http://localhost:3000/accounts');
 	const data = JSON.parse(await res.text());
 	return data;
@@ -35,17 +41,20 @@ getDotfilesData();
   from the function
  */
 
-async function createEntries(result, inputValue) {
+async function createEntries(result, inputValue)
+{
 	let topEntry;
 	let fullEntry;
 	let data = await getDotfilesData();
     data = data.sort((a, b) => b.score - a.score);
     topEntry = data.splice(0, 3);
-    if (result.length === 0 || inputValue === "") {
+    if (result.length === 0 || inputValue === "")
+    {
         fullEntry = await getDotfilesData();
         // fullEntry = fullEntry.sort((a, b) => b.score - a.score);
     }
-    else {
+    else
+    {
         fullEntry = result;
         // fullEntry = fullEntry.sort((a, b) => b.score - a.score);
     }
@@ -57,12 +66,14 @@ createEntries([], []);
   Pretty much self explanatory here
  */
 
-function getUsername(data, user_id) {
+function getUsername(data, user_id)
+{
 	const user = data.find((e) => e.user_id == user_id);
 	return user.username;
 }
 
-function getCurrentUserId() {
+function getCurrentUserId()
+{
     const currentUser = JSON.parse(localStorage.getItem('user'));
     return currentUser.user_id;
 }
@@ -74,7 +85,8 @@ function getCurrentUserId() {
   3. Renders the thing
  */
 
-async function renderDotfiles(topResults, fullResults) {
+async function renderDotfiles(topResults, fullResults)
+{
 	let result;
 
 	const userData = await getUserData();
@@ -84,16 +96,19 @@ async function renderDotfiles(topResults, fullResults) {
 
     console.log(fullResults);
 
-	if (urlArray.find((e) => e == "f") == "f") {
+	if (urlArray.find((e) => e == "f") == "f")
+	{
 		result = fullResults;
-	} else {
+	} else
+	{
 		result = topResults;
 	}
 
 	result.sort((a, b) => b.score - a.score);
 
     let rank = 0;
-	let list = result.map((dotfiles) => {
+	let list = result.map((dotfiles) =>
+	{
         ++rank;
         const username = getUsername(userData, dotfiles.user_id);
         console.log(dotfiles);
@@ -118,7 +133,8 @@ async function renderDotfiles(topResults, fullResults) {
 		`;
 	})
 	document.querySelector("#leaderboard").innerHTML = "";
-	list.forEach((e) => {
+	list.forEach((e) =>
+	{
 		document.querySelector("#leaderboard").innerHTML += e;
 	})
 }
@@ -134,8 +150,10 @@ async function renderDotfiles(topResults, fullResults) {
   4. Calls the create entry function
  */
 
-function getSearchInputValue() {
-	getSearchInput.addEventListener("input", (e) => {
+function getSearchInputValue()
+{
+	getSearchInput.addEventListener("input", (e) =>
+	{
 		e.preventDefault();
 		const searchValue = getSearchInput.value;
 		formatInputValue(searchValue);
@@ -143,26 +161,31 @@ function getSearchInputValue() {
 }
 getSearchInputValue();
 
-function formatInputValue(inputValue) {
+function formatInputValue(inputValue)
+{
 	inputValue = inputValue.trim().toLowerCase();
-	if (inputValue.length <= 1) {
+	if (inputValue.length <= 1)
+	{
 		return;
 	}
 	getSearchResults(inputValue);
 }
 
-function filterSearchResults(data, userdata, inputValue) {
+function filterSearchResults(data, userdata, inputValue)
+{
 	const usrDataNames = userdata.map((e) => e.username);
 	const filteredUsrData = userdata.filter((e) => e.username);
 	const matchingUser = usrDataNames.find((e) => inputValue === e);
-	if (matchingUser) {
+	if (matchingUser)
+	{
 		const matchingUserId = filteredUsrData.find((e) => e.username === matchingUser).user_id;
 		return data.filter((e) => e.user_id === matchingUserId);
 	}
 	return data.filter((e) => e.name == inputValue);
 }
 
-async function getSearchResults(inputValue) {
+async function getSearchResults(inputValue)
+{
 	const userData = await getUserData();
 	const dotfilesData = await getDotfilesData();
 	const filteredData = filterSearchResults(dotfilesData, userData, inputValue);

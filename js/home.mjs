@@ -1,5 +1,6 @@
 // fetching the json api
-import { toggleBookmark } from "./bookmarks.mjs";
+import
+{ toggleBookmark } from "./bookmarks.mjs";
 
 
 /*
@@ -12,41 +13,50 @@ window.toggleBookmark = toggleBookmark;
 
 const url = "http://localhost:3030/dotfiles";
 
-async function getDotfilesData() {
-    try {
+async function getDotfilesData()
+{
+    try
+    {
         const response = await fetch(url);
-        if (!response.ok) {
+        if (!response.ok)
+        {
             throw new error(`response status ${response.status}`);
         }
         const result = await response.json();
         renderDotfiles(result.splice(0, 3));
-    } catch (error) {
+    } catch (error)
+    {
         console.log(error.message);
     }
 }
 getDotfilesData();
 
-async function getUserData() {
+async function getUserData()
+{
     const res = await fetch('http://localhost:3000/accounts');
     const data = JSON.parse(await res.text());
     return data;
 }
 
-function getUsername(data, user_id) {
+function getUsername(data, user_id)
+{
     const user = data.find((e) => e.user_id === user_id);
     return user.username;
 }
 
-function getCurrentUserId() {
+function getCurrentUserId()
+{
     const user = JSON.parse(localStorage.getItem('user'));
     return user.user_id
 }
 
-async function renderDotfiles(results) {
+async function renderDotfiles(results)
+{
     const userData = await getUserData();
     const userId = getCurrentUserId();
     results = results.sort((a, b) => b.id - a.id);
-    let list = results.map((dotfiles) => {
+    let list = results.map((dotfiles) =>
+    {
         const username = getUsername(userData, dotfiles.user_id);
         return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
@@ -66,7 +76,8 @@ async function renderDotfiles(results) {
                                 </td>
 		`;
     })
-    list.forEach((e) => {
+    list.forEach((e) =>
+    {
         document.querySelector("#leaderboard").innerHTML += e;
     })
 }

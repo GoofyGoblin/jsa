@@ -1,34 +1,43 @@
-import { fetchGithubData } from "./submit.mjs";
+import
+{ fetchGithubData } from "./submit.mjs";
 
 const repoUrl = document.getElementById("repo-url");
 
 
-async function selectNvimPath(json) {
+async function selectNvimPath(json)
+{
     const data = await json;
     return data.filter((element) => element.name == "nvim");
 }
 
-function parseRepoObj(repoObj) {
+function parseRepoObj(repoObj)
+{
     const url = new URL(repoUrl.value);
     const [user, repo] = url.pathname.split("/").filter(Boolean);
-    if (repoObj.length <= 0) {
-        return { user, repo };
+    if (repoObj.length <= 0)
+    {
+        return
+        { user, repo };
     }
-    return { user, repo, path: repoObj[0].path };
+    return
+    { user, repo, path: repoObj[0].path };
 }
 
-async function fetchNvimConfigRepo(user, repo, path) {
+async function fetchNvimConfigRepo(user, repo, path)
+{
     let initialUrl = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
 
     /* if the config files is not in another folder in the repo */
-    if (!path) {
+    if (!path)
+    {
         initialUrl = `https://api.github.com/repos/${user}/${repo}/contents`
     }
     const allUrls = await getAllFileUrls(initialUrl);
     return allUrls;
 }
 
-async function getAllFileUrls(url) {
+async function getAllFileUrls(url)
+{
     const res = await fetchGithubData(url);
     if (!res.ok) return [];
     const data = await res.json();
@@ -47,9 +56,11 @@ async function getAllFileUrls(url) {
     return urls;
 }
 
-async function fetchFilesContents(urls) {
+async function fetchFilesContents(urls)
+{
     const fileContents = [];
-    for (const url of urls) {
+    for (const url of urls)
+    {
         const res = await fetchGithubData(url);
         const data = await res.json();
         fileContents.push(atob(data.content));
@@ -57,9 +68,11 @@ async function fetchFilesContents(urls) {
     return fileContents;
 }
 
-function lineCounter(filesArray) {
+function lineCounter(filesArray)
+{
     let loc = 0;
-    for (const fileContent of filesArray) {
+    for (const fileContent of filesArray)
+    {
         loc += fileContent.split("\n").length;
     }
     return loc;
@@ -70,7 +83,8 @@ function lineCounter(filesArray) {
   counts the plugin through regex
  */
 
-function pluginsCounter(filesArray) {
+function pluginsCounter(filesArray)
+{
     const foundPlugins = new Set();
     const combinedContent = filesArray.join("")
         .replace(/--.*$/gm, "")
@@ -106,9 +120,11 @@ function calcScore(loc, plugins) {
   4. Counts the line and function and then pass it the calc function
  */
 
-export async function nvimOutputProcessor(json) {
+export async function nvimOutputProcessor(json)
+{
     const nvimData = await selectNvimPath(json);
-    const { user, repo, path } = parseRepoObj(nvimData);
+    const
+    { user, repo, path } = parseRepoObj(nvimData);
     const urls = await fetchNvimConfigRepo(user, repo, path);
     const filesArray = await fetchFilesContents(urls);
     const loc = lineCounter(filesArray);

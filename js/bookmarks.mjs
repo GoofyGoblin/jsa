@@ -8,22 +8,29 @@ window.deleteBookmark = deleteBookmark;
   It checks if the bookmarked dotfiles already existed (same dotfiles, bookmarked by the same user)
   and deletes the existing one then adds it again
  */
-export async function toggleBookmark(dotfilesId, userId) {
+export async function toggleBookmark(dotfilesId, userId)
+{
     const res = await fetch(`http://localhost:3060/bookmarks`);
     const data = await res.json();
-    const existing = data.filter((e) => { return e.dotfiles_id == dotfilesId && e.user_id == userId; });
+    const existing = data.filter((e) =>
+    { return e.dotfiles_id == dotfilesId && e.user_id == userId; });
     const currentId = randomNumberGenerator();
-    const object = {
+    const object =
+    {
         "dotfiles_id": `${dotfilesId}`,
         "user_id": `${userId}`,
         "id": `${currentId}`
     };
-    if (existing.length > 0) {
-        await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`, { method: 'DELETE' });
+    if (existing.length > 0)
+    {
+        await fetch(`http://localhost:3060/bookmarks/${existing[0].id}`,
+        { method: 'DELETE' });
     }
-    await fetch('http://localhost:3060/bookmarks', {
+    await fetch('http://localhost:3060/bookmarks',
+    {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers:
+        { 'Content-Type': 'application/json' },
         body: JSON.stringify(object)
     });
 }
@@ -32,46 +39,59 @@ export async function toggleBookmark(dotfilesId, userId) {
   Self explanatory
  */
 
-function randomNumberGenerator() {
+function randomNumberGenerator()
+{
     const min = 1;
     const max = 999;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-async function getBookmarksData() {
+async function getBookmarksData()
+{
     const bookmarks = await fetch('http://localhost:3060/bookmarks')
-    return bookmarks.json().then((data) => {
+    return bookmarks.json().then((data) =>
+    {
         return data;
     });
 }
 
-function getCurrentUserId() {
+function getCurrentUserId()
+{
     const currentUser = JSON.parse(localStorage.getItem('user'));
     return currentUser.user_id;
 }
 
-async function getDotfilesData() {
+async function getDotfilesData()
+{
     const dotfilesData = await fetch('http://localhost:3030/dotfiles');
-    return dotfilesData.json().then((data) => { return data; });
+    return dotfilesData.json().then((data) =>
+    { return data; });
 }
 
-async function filterBookmarksData(data, user_id) {
+async function filterBookmarksData(data, user_id)
+{
     return (data.filter((e) => e.user_id === user_id));
 }
 
-async function getUserData() {
+async function getUserData()
+{
     const data = await fetch('http://localhost:3000/accounts');
-    return data.json().then((data) => { return data; });
+    return data.json().then((data) =>
+    { return data; });
 }
 
-function filterDotfilesData(bookmarksData, dotfilesData) {
-    return bookmarksData.map(bookmark => {
+function filterDotfilesData(bookmarksData, dotfilesData)
+{
+    return bookmarksData.map(bookmark =>
+    {
         const dotfile = dotfilesData.find(d => d.id === bookmark.dotfiles_id);
-        return { ...dotfile, bookmark_id: bookmark.id }
+        return
+        { ...dotfile, bookmark_id: bookmark.id }
     })
 }
 
-function getUsername(data, user_id) {
+function getUsername(data, user_id)
+{
     const user = data.find((e) => e.user_id === user_id);
     return user.username;
 }
@@ -80,7 +100,8 @@ function getUsername(data, user_id) {
   This function renders the bookmarked dotfiles according to each user from local storage
  */
 
-async function renderBookmarks() {
+async function renderBookmarks()
+{
     const data = await getBookmarksData();
     const userId = getCurrentUserId();
     const userData = await getUserData();
@@ -89,13 +110,15 @@ async function renderBookmarks() {
     const filteredDotfilesData = filterDotfilesData(bookmarksData, dotfilesData);
 
     tableBody.innerHTML = "";
-    if (bookmarksData.length == 0) {
+    if (bookmarksData.length == 0)
+    {
         tableComponent.classList.add("hidden")
         noBookmarks.classList.remove("hidden")
         return;
     }
 
-    let list = filteredDotfilesData.map((bookmarks) => {
+    let list = filteredDotfilesData.map((bookmarks) =>
+    {
         const username = getUsername(userData, bookmarks.user_id)
         const bId = bookmarks.bookmark_id;
         return `
@@ -111,12 +134,15 @@ async function renderBookmarks() {
                         </td>
         `;
     })
-    list.forEach((e) => {
+    list.forEach((e) =>
+    {
         tableBody.innerHTML += e;
     })
 }
 renderBookmarks();
 
-async function deleteBookmark(id) {
-    await fetch(`http://localhost:3060/bookmarks/${id}`, { method: 'DELETE' });
+async function deleteBookmark(id)
+{
+    await fetch(`http://localhost:3060/bookmarks/${id}`,
+    { method: 'DELETE' });
 }

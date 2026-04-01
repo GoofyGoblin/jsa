@@ -27,15 +27,20 @@ window.confirmDeletion = confirmDeletion;
 /*
   Self explanatory
  */
-async function getDotfilesData() {
-    try {
+async function getDotfilesData() 
+{
+    try 
+    {
         const response = await fetch(url);
-        if (!response.ok) {
+        if (!response.ok) 
+        {
             throw new error(`response status ${response.status}`);
         }
         result = await response.json();
         renderDotfiles(result);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.log(error.message);
     }
 }
@@ -47,14 +52,17 @@ getDotfilesData();
   2. If user is not admin then send them to home page
  */
 
-function checkUserCredentials() {
+function checkUserCredentials() 
+{
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+    if (!user) 
+    {
         alert('Log in please');
         window.location.href = "login.html";
         return;
     }
-    if (user.username != "admin") {
+    if (user.username != "admin") 
+    {
         alert('Not an admin');
         window.location.href = "home.html";
         return;
@@ -67,8 +75,10 @@ checkUserCredentials();
   Render dotfiles
  */
 
-function renderDotfiles(results) {
-    let list = results.map((dotfiles) => {
+function renderDotfiles(results)
+{
+    let list = results.map((dotfiles) =>
+    {
         return `
 						<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
 								<td class="px-4 py-3 text-sm font-medium text-center text-slate-500">${dotfiles.id}</td>
@@ -83,7 +93,8 @@ function renderDotfiles(results) {
 							</tr>
 		`;
     })
-    list.forEach((e) => {
+    list.forEach((e) =>
+    {
         document.querySelector("#admin-leaderboard-body").innerHTML += e;
     })
 }
@@ -92,7 +103,8 @@ function renderDotfiles(results) {
   This function calls the other functions that opens the CRUD ui and checks for the edit button
  */
 
-function start(id, user_id, repo_url) {
+function start(id, user_id, repo_url)
+{
     openEditMenu();
     closeEditMenu();
     sendEditMenuBtnHandler();
@@ -102,30 +114,38 @@ function start(id, user_id, repo_url) {
 }
 
 
-function openEditMenu() {
+function openEditMenu()
+{
     editMenu.classList.remove("hidden");
 }
 
-function closeEditMenu() {
-    closeEditMenuBtn.addEventListener("click", () => {
+function closeEditMenu()
+{
+    closeEditMenuBtn.addEventListener("click", () =>
+    {
         editMenu.classList.add("hidden");
     })
-    cancelEditMenuBtn.addEventListener("click", () => {
+    cancelEditMenuBtn.addEventListener("click", () =>
+    {
         editMenu.classList.add("hidden");
     })
 }
 
 
-function sendEditMenuBtnHandler() {
-    sendEditMenuBtn.addEventListener("click", (e) => {
+function sendEditMenuBtnHandler()
+{
+    sendEditMenuBtn.addEventListener("click", (e) =>
+    {
         e.preventDefault();
         editMenu.classList.add("hidden");
         createUserObj();
     })
 }
 
-function createUserObj() {
-    const userObj = {
+function createUserObj()
+{
+    const userObj =
+    {
         "id": `${currentId}`,
         "user_id": `${currentUserId}`,
         "name": `${getEditedSoftwareName.value}`,
@@ -136,9 +156,11 @@ function createUserObj() {
     sendEditMenu(userObj);
 }
 
-function confirmDeletion(id) {
+function confirmDeletion(id)
+{
     const confirmation = confirm("Are you sure you want to delete this dotfiles?");
-    if (!confirmation) {
+    if (!confirmation)
+    {
         return;
     }
     deleteDotfilesList(id);
@@ -148,14 +170,18 @@ function confirmDeletion(id) {
   Functions that gets called when the CRUD ui elements get clicked
  */
 
-async function sendEditMenu(userObj) {
-    const sendEditMenu = await fetch(`http://localhost:3030/dotfiles/${userObj.id}`, {
+async function sendEditMenu(userObj)
+{
+    const sendEditMenu = await fetch(`http://localhost:3030/dotfiles/${userObj.id}`,
+    {
         method: 'PATCH',
-        headers: { "Content-type": "application/json" },
+        headers:
+        { "Content-type": "application/json" },
         body: JSON.stringify(userObj)
     })
     if (!sendEditMenu) return;
-    if (!sendEditMenu.ok) {
+    if (!sendEditMenu.ok)
+    {
         alert("Something went wrong");
     }
 }
@@ -165,25 +191,32 @@ async function sendEditMenu(userObj) {
   it's also not really relevant to the function above
  */
 
-async function sendNewEditMenu(userObj) {
-    const sendNewEditMenu = await fetch("http://localhost:3030/dotfiles", {
+async function sendNewEditMenu(userObj)
+{
+    const sendNewEditMenu = await fetch("http://localhost:3030/dotfiles",
+    {
         method: 'POST',
-        headers: { "Content-type": "application/json" },
+        headers:
+        { "Content-type": "application/json" },
         body: JSON.stringify(userObj)
     })
     if (!sendNewEditMenu) return;
-    if (!sendNewEditMenu.ok) {
+    if (!sendNewEditMenu.ok)
+    {
         alert("Something went wrong");
     }
 }
 
-async function deleteDotfilesList(id) {
-    const deleteDotfilesList = await fetch(`http://localhost:3030/dotfiles/${id}`, {
+async function deleteDotfilesList(id)
+{
+    const deleteDotfilesList = await fetch(`http://localhost:3030/dotfiles/${id}`,
+    {
         method: 'DELETE',
         body: JSON.stringify(id)
     })
     if (!deleteDotfilesList) return;
-    if (!deleteDotfilesList.ok) {
+    if (!deleteDotfilesList.ok)
+    {
         alert("Something went wrong");
     }
 }
@@ -191,17 +224,22 @@ async function deleteDotfilesList(id) {
 /*
   Gets the dotfiles option (nvim or dwm)
  */
-function getAdminChoice() {
-    adminOption.addEventListener("change", (e) => {
+function getAdminChoice()
+{
+    adminOption.addEventListener("change", (e) =>
+    {
         adminOption = e.target.value;
     })
 }
 getAdminChoice();
 
-function pushBtnClicked() {
-    getPushBtn.addEventListener("click", (e) => {
+function pushBtnClicked()
+{
+    getPushBtn.addEventListener("click", (e) =>
+    {
         e.preventDefault();
-        const newUserObj = {
+        const newUserObj =
+        {
             "id": `${result.length + 1}`,
             "user_id": `1`,
             "name": `${adminChoice}`,

@@ -10,47 +10,59 @@ const tableBody = document.getElementById('user-submissions-list');
   Self explanatory
  */
 
-async function getDotfilesData() {
-    try {
+async function getDotfilesData()
+{
+    try
+    {
         const response = await fetch(dotfilesUrl);
-        if (!response.ok) {
+        if (!response.ok)
+        {
             throw new Error(`response status ${response.status}`);
         }
         const result = await response.json();
         return result;
-    } catch (error) {
+    } catch (error)
+    {
         console.log(error.message);
     }
 }
 
-async function getUserData() {
-    try {
+async function getUserData()
+{
+    try
+    {
         const res = await fetch(accountsUrl);
-        if (!res.ok) {
+        if (!res.ok)
+        {
             throw new Error(`response status ${res.status}`);
         }
         const data = JSON.parse(await res.text());
         return data;
-    } catch (error) {
+    } catch (error)
+    {
         console.log(error.message);
     }
 }
 
-function getUsername() {
+function getUsername()
+{
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('username');
-    if (!username) {
+    if (!username)
+    {
         return;
     }
     return username;
 }
 
-async function getUser(username) {
+async function getUser(username)
+{
     const userData = await getUserData();
     return userData.find(u => u.username === username);
 }
 
-async function getDotfiles(user) {
+async function getDotfiles(user)
+{
     const dotfilesData = await getDotfilesData();
     return dotfilesData.filter(d => d.user_id === user.user_id);
 }
@@ -62,27 +74,32 @@ async function getDotfiles(user) {
   3. caculates the avrage score combined from the uploaded dotfiles's score
  */
 
-function calcAvgScore(dotfiles) {
+function calcAvgScore(dotfiles)
+{
     let avgScore = "N/A";
-    if (dotfiles.length > 0) {
+    if (dotfiles.length > 0)
+    {
         const totalScore = dotfiles.reduce((sum, d) => sum + parseFloat(d.score || 0), 0);
         avgScore = (totalScore / dotfiles.length).toFixed(1);
     }
     return avgScore;
 }
 
-function updateDom(user, dotfiles, score) {
+function updateDom(user, dotfiles, score)
+{
     usersUsername.innerText = user.username;
     usersRole.innerText = user.role;
     usersSubmitCount.innerText = dotfiles.length;
     usersAvgScore.innerText = score;
 }
 
-async function renderProfile() {
+async function renderProfile()
+{
     const username = getUsername();
 
     const user = await getUser(username);
-    if (!user) {
+    if (!user)
+    {
         document.getElementById('user-username').innerText = "User not found";
         return;
     }
@@ -91,9 +108,11 @@ async function renderProfile() {
 
     updateDom(user, userDotfiles, avgScore);
 
-    if (userDotfiles.length > 0) {
+    if (userDotfiles.length > 0)
+    {
         tableBody.innerHTML = "";
-        userDotfiles.forEach(dotfile => {
+        userDotfiles.forEach(dotfile =>
+        {
             tableBody.innerHTML += `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
                     <td class="px-4 py-4 text-sm font-medium text-slate-900 dark:text-white">${dotfile.name}</td>

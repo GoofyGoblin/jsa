@@ -1,5 +1,7 @@
-import { nvimOutputProcessor } from "./nvim_judge.mjs";
-import { dwmOutputProcessor } from "./dwm_judge.mjs";
+import
+{ nvimOutputProcessor } from "./nvim_judge.mjs";
+import
+{ dwmOutputProcessor } from "./dwm_judge.mjs";
 const token = "token"
 const userOption = document.getElementById("select");
 const submitButton = document.getElementById("submit-btn");
@@ -8,14 +10,16 @@ const userDescription = document.getElementById("description");
 
 const repoUrl = document.getElementById("repo-url");
 
-function getCurrentUserId() {
+function getCurrentUserId()
+{
     let currentUserId;
     const user = JSON.parse(localStorage.getItem('user'));
     currentUserId = user.user_id;
     return currentUserId;
 }
 
-async function getDotfilesId() {
+async function getDotfilesId()
+{
     const res = await fetch('http://localhost:3030/dotfiles');
     const data = JSON.parse(await res.text());
     return data.length;
@@ -23,12 +27,15 @@ async function getDotfilesId() {
 
 /*executes command n call functions whenever user clicks the submit button*/
 
-function getSubmitButton() {
-    submitButton.addEventListener("click", (e) => {
+function getSubmitButton()
+{
+    submitButton.addEventListener("click", (e) =>
+    {
         e.preventDefault();
 
         const checkLoggedIn = checkIfLoggedIn(); // fucking self explanatory
-        if (!checkLoggedIn) {
+        if (!checkLoggedIn)
+        {
             alert("Please create an account before submitting")
             return;
         }
@@ -39,23 +46,28 @@ function getSubmitButton() {
 getSubmitButton();
 
 
-function checkIfLoggedIn() {
+function checkIfLoggedIn()
+{
     const user = localStorage.getItem('user');
-    if (user) {
+    if (user)
+    {
         return true;
     }
     return false;
 }
 
 
-function getGithubUrl() {
-    if (repoUrl.value === "") {
+function getGithubUrl()
+{
+    if (repoUrl.value === "")
+    {
         alert("Please enter a repo URL");
     }
     parseGithubUrl(repoUrl.value);
 }
 
-function parseGithubUrl(url) {
+function parseGithubUrl(url)
+{
     const repoUrl = new URL(url);
     const [user, repo] = repoUrl.pathname.split("/").filter(Boolean);
     fetchRepoContents(user, repo);
@@ -64,39 +76,50 @@ function parseGithubUrl(url) {
 
 /* data fetching function to be used in judge files */
 
-export async function fetchGithubData(url) {
-    try {
-        const res = await fetch(url, {
+export async function fetchGithubData(url)
+{
+    try
+    {
+        const res = await fetch(url,
+        {
             method: 'GET',
-            headers: {
+            headers:
+            {
                 'Authorization': `Bearer ${token}`,
                 'X-GitHub-Api-Version': '2022-11-28',
                 'Accept': 'application/vnd.github+json'
             }
         });
         return res;
-    } catch (e) {
+    } catch (e)
+    {
         console.log(e);
     }
 }
 
-async function fetchRepoContents(user, repo) {
+async function fetchRepoContents(user, repo)
+{
     const res = await fetchGithubData(`https://api.github.com/repos/${user}/${repo}/contents`);
-    if (!res.ok) {
+    if (!res.ok)
+    {
         throw new Error("Repo not found")
     }
-    if (userOption.value === "nvim") {
+    if (userOption.value === "nvim")
+    {
         dotfilesScore = await nvimOutputProcessor(res.json());
-    } else if (userOption.value === "dwm") {
+    } else if (userOption.value === "dwm")
+    {
         dotfilesScore = await dwmOutputProcessor(res.json());
     }
     createNewDotfileData(dotfilesScore);
 }
 
-async function createNewDotfileData(score) {
+async function createNewDotfileData(score)
+{
     const currentUserId = await getCurrentUserId();
     const currentDotfilesId = await getDotfilesId();
-    const newDotfileData = {
+    const newDotfileData =
+    {
         "id": `${currentDotfilesId + 1}`,
         "user_id": `${currentUserId}`,
         "name": `${userOption.value}`,
@@ -107,41 +130,53 @@ async function createNewDotfileData(score) {
     checkForRepeatSubmission(newDotfileData);
 }
 
-async function checkForRepeatSubmission(repo_data) {
+async function checkForRepeatSubmission(repo_data)
+{
     let check = true;
     const res = await fetch('http://localhost:3030/dotfiles');
     const data = JSON.parse(await res.text());
     console.log(data);
-    data.forEach((e) => {
-        if (e.repo_url === repo_data.repo_url) {
+    data.forEach((e) =>
+    {
+        if (e.repo_url === repo_data.repo_url)
+        {
             check = false;
         }
     })
-    if (check == false) {
+    if (check == false)
+    {
         alert("You have already submitted this repo");
-    } else {
+    } else
+    {
         pushDotfilesData(repo_data);
     }
 }
 
-async function pushDotfilesData(obj) {
-    await fetch('http://localhost:3030/dotfiles', {
+async function pushDotfilesData(obj)
+{
+    await fetch('http://localhost:3030/dotfiles',
+    {
         method: 'POST',
-        headers: {
+        headers:
+        {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(obj)
     })
-        .then((res) => {
-            if (!res.ok) {
+        .then((res) =>
+        {
+            if (!res.ok)
+            {
                 throw new Error('Network response was not ok');
             }
             return res.json();
         })
-        .then(data => {
+        .then(data =>
+        {
             console.log("Success: ", data);
         })
-        .catch(error => {
+        .catch(error =>
+        {
             console.log("Error: ", error);
         })
 }
